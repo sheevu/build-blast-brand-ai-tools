@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { Sparkles, Rocket, Bot, ShoppingBag, Star, Check, X } from "lucide-react"; // Import Check and X
 
 // --- Global Styles (from index.css) ---
+// === FONT UPDATE ===
 const globalStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@400;600;700&display=swap');
 
   @tailwind base;
   @tailwind components;
@@ -16,8 +17,8 @@ const globalStyles = `
       @apply scroll-smooth;
     }
     body {
-      /* Set base font */
-      @apply font-['Montserrat',system-ui] bg-[#0B0F19] text-white antialiased;
+      /* === FONT UPDATE: Set base font to Inter === */
+      @apply font-['Inter',system-ui] bg-[#0B0F19] text-white antialiased;
     }
   }
 `;
@@ -28,29 +29,29 @@ const floatIn = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
 
 // === UPDATED PRICING DATA ===
-// Transcribed from your 'pricing - MainSheet.csv'
 const pricingPlans = [
-  // Category: bundle
-  { id: "swaraj-89", label: "Swaraj Tech Pack", nickname: "Nano launch pad", category: "bundle", mrp: 999, price: 89, blurb: "24-hr digital shop + WhatsApp ordering." },
-  { id: "prarambh-499", label: "Prarambh Kick-Start", nickname: "Starter boost", category: "bundle", mrp: 1500, price: 499, blurb: "Profile clean-up + launch page." },
-  { id: "prabhav-1399", label: "Prabhav Dominator", nickname: "Always-on engine", category: "bundle", mrp: 3200, price: 1399, blurb: "Managed social + reporting." },
+  // Category: bundle (Launch Packs)
+  { id: "swaraj-89", label: "Swaraj Tech Pack", nickname: "Nano launch pad", category: "bundle", mrp: 999, price: 89, blurb: "Launch your MSME online—Lucknow’s most affordable tech bundle!" },
+  { id: "prarambh-499", label: "Prarambh Kick-Start", nickname: "Starter boost", category: "bundle", mrp: 1500, price: 499, blurb: "Get WhatsApp automation + digital business setup at the best value for UP MSMEs." },
+  { id: "udaan-889", label: "Udaan Vyapari Pack", nickname: "Vyapari MSME Growth", category: "bundle", mrp: 2399, price: 889, blurb: "Business automation with smart digital marketing for every Vyapari." },
+  { id: "prabhav-1399", label: "Prabhav Dominator", nickname: "Always-on engine", category: "bundle", mrp: 3200, price: 1399, blurb: "Scale with monthly lead generation & digital marketing." },
+  { id: "vikas-1599", label: "Vikas Growth Pro Pack", nickname: "Full-stack Growth", category: "bundle", mrp: 4500, price: 1599, blurb: "Full-service digital marketing & automation for growing MSMEs." },
+
+  // Category: social (Social Bundles)
+  { id: "foundation-1500", label: "Digital Foundation", nickname: "Starter social", category: "social", mrp: 3500, price: 1500, blurb: "Entry-level social media marketing pack for MSMEs in Lucknow." },
+  { id: "expansion-3000", label: "Digital Expansion", nickname: "Multi-platform", category: "social", mrp: 5500, price: 3000, blurb: "Upgrade social media—advanced marketing tools for MSMEs." },
+  { id: "dominance-4500", label: "Digital Dominance", nickname: "Category king", category: "social", mrp: 7000, price: 4500, blurb: "Premium social media, content creation, integrated automation for MSMEs." },
   
-  // Category: social (These are also used for the table headers)
-  { id: "foundation-1500", label: "Digital Foundation", nickname: "Starter social", category: "social", mrp: 3500, price: 1500, blurb: "Profile setup + basic posts." },
-  { id: "expansion-3000", label: "Digital Expansion", nickname: "Multi-platform", category: "social", mrp: 5500, price: 3000, blurb: "Content + light ads + reports." },
-  { id: "dominance-4500", label: "Digital Dominance", nickname: "Category king", category: "social", mrp: 7000, price: 4500, blurb: "Aggressive content + ads." },
-  
-  // Category: individual
-  { id: "consult-499", label: "1:1 Growth Consultation", nickname: "Strategy jam", category: "individual", mrp: 3500, price: 499, blurb: "60–90min tactical session." },
-  { id: "catalog-pro-599", label: "Catalog Builder Pro", nickname: "Smart catalog", category: "individual", mrp: 1499, price: 599, blurb: "AI-assisted product catalog." },
-  { id: "seo-599", label: "SEO & Content Boost", nickname: "Rank lift", category: "individual", mrp: 1899, price: 599, blurb: "90-day keyword + content plan." },
-  { id: "landing-page-1299", label: "Custom Landing Page", nickname: "Conversion page", category: "individual", mrp: 3500, price: 1299, blurb: "Single-page site for a specific campaign." },
-  { id: "bio-link-229", label: "All Bio Link+GMB", nickname: "Online presence", category: "individual", mrp: 1200, price: 229, blurb: "Bio link setup + verified GMB profile." },
-  { id: "pr-launch-899", label: "PR Launch", nickname: "Get featured", category: "individual", mrp: 2499, price: 899, blurb: "Digital press release and distribution." },
+  // Category: individual (Individual Services)
+  { id: "consult-499", label: "1:1 Growth Consultation", nickname: "Strategy jam", category: "individual", mrp: 3500, price: 499, blurb: "1:1 strategy session with an AI growth expert for MSMEs." },
+  { id: "catalog-pro-599", label: "Catalog Builder Pro", nickname: "Smart catalog", category: "individual", mrp: 1499, price: 599, blurb: "Build an AI-powered e-commerce catalog for WhatsApp & Google." },
+  { id: "seo-599", label: "SEO & Content Boost", nickname: "Rank lift", category: "individual", mrp: 1899, price: 599, blurb: "Basic SEO/GMB audit + 90-day content plan for MSMEs." },
+  { id: "landing-page-1299", label: "Custom Landing Page", nickname: "Conversion page", category: "individual", mrp: 3500, price: 1299, blurb: "High-conversion landing page for your MSME, built for ads." },
+  { id: "bio-link-229", label: "All Bio Link+GMB", nickname: "Online presence", category: "individual", mrp: 1200, price: 229, blurb: "Get your 'All-in-one' bio link + verified Google Business Profile." },
+  { id: "pr-launch-899", label: "PR Launch", nickname: "Get featured", category: "individual", mrp: 2499, price: 899, blurb: "Affordably launch your MSME with digital PR for instant trust." },
 ];
 
-// === NEW SOCIAL FEATURES DATA ===
-// Transcribed from your 'pricing - Social media Info.csv'
+// === SOCIAL FEATURES DATA ===
 const socialFeaturesData = [
   { feature: "Target Business", foundation: "New MSMEs, Startup/MUDRA", expansion: "Growing MSMEs, MSME Champions", dominance: "Established MSMEs, Export" },
   { feature: "Promotion Posters", foundation: "10", expansion: "15", dominance: "30" },
@@ -71,13 +72,13 @@ const socialFeaturesData = [
 ];
 
 
-// Note: The main component is renamed to 'App' for consistency
 function App() {
   return (
     <>
       {/* Injecting global styles */}
       <style>{globalStyles}</style>
-      <div className="min-h-screen bg-[#0B0F19] text-white font-['Montserrat',system-ui] antialiased">
+      {/* === FONT UPDATE: Set base font to Inter === */}
+      <div className="min-h-screen bg-[#0B0F19] text-white font-['Inter',system-ui] antialiased">
         <NeonGridBackdrop />
         <GlowBlobs />
 
@@ -140,14 +141,17 @@ function Hero() {
           <span>AI Enabled Growth • Lucknow Launchpad</span>
         </motion.div>
 
-        <motion.h1 variants={floatIn} className="font-['Orbitron',system-ui] text-3xl sm:text-4xl md:text-5xl leading-tight">
-          <span className="block text-white">India's Chillest</span>
-          <span className="mt-1 inline bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] bg-clip-text text-transparent">AI Marketing HQ from Lucknow</span>
+        {/* === HERO CONTENT & FONT UPDATE === */}
+        <motion.h1 variants={floatIn} className="font-['Lexend',system-ui] text-3xl sm:text-4xl md:text-5xl leading-tight font-semibold">
+          <span className="block text-white">Scale Your Dhandha.</span>
+          <span className="mt-1 inline bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] bg-clip-text text-transparent">Lucknow's AI Growth Engine.</span>
         </motion.h1>
 
-        <motion.p variants={floatIn} className="max-w-xl text-sm leading-relaxed text-white/70">
-          Sudarshan AI Labs builds Uni-commerce portals, reel-ready content and always-on campaigns — tuned to Hazratganj, Gomti Nagar and your mohalla.
+        <motion.p variants={floatIn} className="max-w-xl text-base leading-relaxed text-white/70">
+          Grow your MSME with AI-powered WhatsApp automation, smart catalogs, and local-first lead generation. Practical, affordable, and tuned to your mohalla. Start today.
         </motion.p>
+        {/* === END HERO CONTENT UPDATE === */}
+
 
         <motion.div variants={floatIn} className="flex gap-3">
           <a href="#pricing" className="rounded-full bg-gradient-to-r from-[#7F00FF] via-[#FF8C00] to-[#00FFFF] px-5 py-2 text-sm font-semibold text-black shadow-[0_0_30px_rgba(127,0,255,0.8)]">Start ₹89</a>
@@ -191,8 +195,11 @@ function About() {
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid gap-10 md:grid-cols-[1.3fr_1fr]">
         <motion.div variants={floatIn}>
           <SectionLabel>Why Sudarshan AI Labs?</SectionLabel>
-          <h2 className="mt-2 font-['Orbitron'] text-2xl md:text-3xl">From kabab trails to killer funnels.</h2>
-          <p className="mt-4 text-white/70">Lucknow-born, AI-first studio. We help MSMEs, creators & startups launch digital shops, content engines and growth flywheels — practical, low-cost, local-first.</p>
+          {/* === FONT UPDATE === */}
+          <h2 className="mt-2 font-['Lexend'] text-2xl md:text-3xl font-semibold">From kabab trails to killer funnels.</h2>
+          <p className="mt-4 text-white/70">
+            Lucknow-born, AI-first studio. We help MSMEs, creators & startups launch digital shops, content engines, and growth flywheels. From AI-powered WhatsApp automation and smart-catalog builders to full-service lead generation campaigns, we build practical, low-cost, local-first solutions to scale your <em>dhandha</em>.
+          </p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             <AboutChip title="₹89 Launchpad" desc="Plug-and-play portal + basic campaign." />
             <AboutChip title="Hindi + Hinglish" desc="Copy tuned to your audience." />
@@ -246,7 +253,7 @@ function PricingSection() {
 
       <div className="mt-4 flex gap-3 flex-wrap">
         {tabs.map((t) => (
-          <button key={t.id} onClick={() => setActive(t.id)} className={`px-4 py-1.5 rounded-full text-xs transition-all ${active===t.id?"bg-emerald-400/10 border border-emerald-400 text-emerald-200":"bg-black/30 border border-white/10 text-white/70 hover:border-white/30"}`}>
+          <button key={t.id} onClick={() => setActive(t.id)} className={`px-4 py-1.5 rounded-full text-sm transition-all ${active===t.id?"bg-emerald-400/10 border border-emerald-400 text-emerald-200":"bg-black/30 border border-white/10 text-white/70 hover:border-white/30"}`}>
             {t.label}
           </button>
         ))}
@@ -259,11 +266,17 @@ function PricingSection() {
           <SocialCompareTable data={socialFeaturesData} />
         ) : (
           // Otherwise, show the original pricing card grid
-          <div className="grid gap-6 md:grid-cols-3">
+          <motion.div 
+            key={active} // Add key to force re-render on tab change
+            variants={stagger} 
+            initial="hidden" 
+            animate="visible" 
+            className="grid gap-6 md:grid-cols-3"
+          >
             {filteredCards.map((plan) => (
               <PricingCard key={plan.id} plan={plan} />
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
@@ -274,7 +287,7 @@ function PricingCard({ plan }) {
   const fmt = new Intl.NumberFormat("en-IN");
   const save = plan.mrp ? Math.round(((plan.mrp - plan.price) / plan.mrp) * 100) : 0;
   return (
-    <motion.div whileHover={{ y: -8 }} transition={{ type: "spring" }} className="rounded-3xl p-5 bg-[#050814]/90 border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.6)] flex flex-col">
+    <motion.div variants={floatIn} whileHover={{ y: -8 }} transition={{ type: "spring" }} className="rounded-3xl p-5 bg-[#050814]/90 border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.6)] flex flex-col">
       <div className="flex justify-between items-start">
         <div>
           <p className="font-semibold text-white">{plan.label}</p>
@@ -287,7 +300,7 @@ function PricingCard({ plan }) {
           <div className="text-2xl font-bold">₹{fmt.format(plan.price)}</div>
           <div className="text-xs text-white/50 line-through">₹{fmt.format(plan.mrp)}</div>
         </div>
-        <p className="text-xs text-white/70 mt-2 flex-grow">{plan.blurb}</p>
+        <p className="text-sm text-white/70 mt-2 flex-grow">{plan.blurb}</p>
         <button className="mt-4 w-full rounded-full bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] py-2 text-black font-semibold">Book on WhatsApp</button>
       </div>
     </motion.div>
@@ -326,7 +339,8 @@ function CTA() {
       <div className="rounded-[26px] bg-black/70 p-8 flex flex-col md:flex-row md:justify-between md:items-center gap-6">
         <div>
           <p className="text-xs uppercase text-emerald-200">Ready for 2025 growth?</p>
-          <h3 className="font-['Orbitron'] text-2xl md:text-3xl">Launch your AI HQ for ₹89</h3>
+          {/* === FONT UPDATE === */}
+          <h3 className="font-['Lexend'] text-2xl md:text-3xl font-semibold">Launch your AI HQ for ₹89</h3>
           <p className="text-white/70 mt-2">Portal, audit and campaign idea — tuned to your street or mall.</p>
         </div>
         <div>
@@ -356,7 +370,7 @@ function Footer() {
 
 /* ====== Utility components ====== */
 
-// === NEW COMPONENT: SocialCompareTable ===
+// === COMPONENT: SocialCompareTable ===
 function SocialCompareTable({ data }) {
   const CheckMark = () => <Check className="h-5 w-5 text-emerald-400 mx-auto" />;
   const CrossMark = () => <X className="h-5 w-5 text-white/30 mx-auto" />;
@@ -460,7 +474,8 @@ function GlowBlobs() {
 }
 
 function SectionLabel({ children }) { return (<p className="text-xs uppercase tracking-[0.26em] text-emerald-300/80 flex items-center gap-2"> <span className="h-[1px] w-6 bg-gradient-to-r from-transparent via-emerald-400/70 to-transparent" />{children}</p>); }
-function SectionHeader({ eyebrow, title, subtitle }) { return (<div className="space-y-3 max-w-2xl">{eyebrow && <SectionLabel>{eyebrow}</SectionLabel>}<h2 className="font-['Orbitron'] text-2xl text-white md:text-3xl">{title}</h2>{subtitle && <p className="text-sm text-white/70 md:text-base">{subtitle}</p>}</div>); }
+// === FONT UPDATE ===
+function SectionHeader({ eyebrow, title, subtitle }) { return (<div className="space-y-3 max-w-2xl">{eyebrow && <SectionLabel>{eyebrow}</SectionLabel>}<h2 className="font-['Lexend'] text-2xl text-white md:text-3xl font-semibold">{title}</h2>{subtitle && <p className="text-sm text-white/70 md:text-base">{subtitle}</p>}</div>); }
 function AboutChip({ title, desc }) { return (<div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_0_18px_rgba(0,0,0,0.5)]"><div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-emerald-200/90"><span className="flex h-6 w-6 items-center justify-center rounded-xl bg-gradient-to-br from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] text-black shadow-[0_0_18px_rgba(34,197,94,0.8)]"><ShoppingBag className="h-3 w-3" /></span><span>{title}</span></div><p className="mt-3 text-xs text-white/70">{desc}</p></div>); }
 
 function ServiceCard({ gradient, title, badge, price, points }) {
@@ -486,4 +501,3 @@ if (rootElement) {
 } else {
   console.error("Failed to find the root element to mount the React app.");
 }
-
