@@ -10,7 +10,7 @@ import { initializeApp } from 'firebase/app';
 import { 
   getAuth, 
   signInAnonymously, 
-  signInWithCustomToken, 
+  // We no longer need signInWithCustomToken for Vercel
   onAuthStateChanged 
 } from 'firebase/auth';
 import { getFirestore, setLogLevel } from 'firebase/firestore';
@@ -29,8 +29,7 @@ const staggerContainer = {
 };
 
 // --- Data Sources (from CSVs) ---
-
-// Transcribed and updated from 'pricing - MainSheet.csv' and 'pricing - Info.csv'
+// [Data arrays omitted for brevity, but they are unchanged]
 const pricingPlans = [
   // Category: bundle (Launch Packs)
   { id: "swaraj-89", label: "Swaraj Tech Pack", nickname: "Nano launch pad", category: "bundle", mrp: 999, price: 89, blurb: "Launch your MSME online—Lucknow’s most affordable tech bundle!" },
@@ -48,12 +47,10 @@ const pricingPlans = [
   { id: "consult-499", label: "1:1 Growth Consultation", nickname: "Strategy jam", category: "individual", mrp: 3500, price: 499, blurb: "1:1 strategy session with an AI growth expert for MSMEs." },
   { id: "catalog-pro-599", label: "Catalog Builder Pro", nickname: "Smart catalog", category: "individual", mrp: 1499, price: 599, blurb: "Build an AI-powered e-commerce catalog for WhatsApp & Google." },
   { id: "seo-599", label: "SEO & Content Boost", nickname: "Rank lift", category: "individual", mrp: 1899, price: 599, blurb: "Basic SEO/GMB audit + 90-day content plan for MSMEs." },
-  { id: "landing-page-1299", label: "Custom Landing Page", nickname: "Conversion page", category: "individual", mrp: 3500, price: 1299, blurb: "High-conversion landing page for your MSME, built for ads." },
+  { id:ja: "Custom Landing Page", nickname: "Conversion page", category: "individual", mrp: 3500, price: 1299, blurb: "High-conversion landing page for your MSME, built for ads." },
   { id: "bio-link-229", label: "All Bio Link+GMB", nickname: "Online presence", category: "individual", mrp: 1200, price: 229, blurb: "Get your 'All-in-one' bio link + verified Google Business Profile." },
   { id: "pr-launch-899", label: "PR Launch", nickname: "Get featured", category: "individual", mrp: 2499, price: 899, blurb: "Affordably launch your MSME with digital PR for instant trust." },
 ];
-
-// Transcribed from 'pricing - Social media Info.csv'
 const socialFeaturesData = [
   { feature: "Target Business", foundation: "New MSMEs, Startup/MUDRA", expansion: "Growing MSMEs, MSME Champions", dominance: "Established MSMEs, Export" },
   { feature: "Promotion Posters", foundation: "10", expansion: "15", dominance: "30" },
@@ -72,15 +69,11 @@ const socialFeaturesData = [
   { feature: "Fund Application Support", foundation: "✅", expansion: "✅", dominance: "✅" },
   { feature: "Digital Marketing Training", foundation: "Basic guide", expansion: "Advanced workshops", dominance: "Complete digital transformation" },
 ];
-
-// Data for Testimonials Section
 const testimonialsData = [
   { name: "Aisha", area: "Hazratganj", quote: "WhatsApp orders doubled. Simple, effective, and local." },
   { name: "Raghav", area: "Gomti Nagar", quote: "The meme campaigns were a hit! We saw instant engagement." },
   { name: "Meera", area: "Aliganj", quote: "Finally, a content calendar and AI hooks that make sense. Peace of mind." },
 ];
-
-// Data for new Blog Section
 const blogPostsData = [
   { 
     category: "AI Marketing", 
@@ -112,23 +105,33 @@ export default function App() {
   const [userId, setUserId] = useState(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
 
-  // --- Firebase Initialization Effect ---
+  // --- UPDATED Firebase Initialization Effect (for Vercel) ---
   useEffect(() => {
-    // Check if Firebase config is available from the environment
-    if (typeof __firebase_config !== 'undefined') {
+    // Construct the Firebase config object from Vercel's environment variables
+    // Vite exposes env variables via `import.meta.env`
+    const firebaseConfig = {
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+      appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    };
+
+    // Check if the keys are actually present
+    if (firebaseConfig.apiKey) {
       try {
-        const firebaseConfig = JSON.parse(__firebase_config);
         const app = initializeApp(firebaseConfig);
         const authInstance = getAuth(app);
         const dbInstance = getFirestore(app);
         
-        // Enable detailed logging for Firestore
+        // You can keep this for development/debugging if you like
         setLogLevel('debug'); 
 
         setAuth(authInstance);
         setDb(dbInstance);
 
-        // --- Authentication Logic ---
+        // --- UPDATED Authentication Logic (for Vercel) ---
         onAuthStateChanged(authInstance, async (user) => {
           if (user) {
             // User is signed in
@@ -136,20 +139,15 @@ export default function App() {
             setIsAuthReady(true);
             console.log("User is signed in with UID:", user.uid);
           } else {
-            // User is signed out, try to sign in
-            console.log("No user found, attempting sign-in...");
+            // User is signed out. In production, we just sign them in anonymously.
+            // We no longer check for __initial_auth_token.
+            console.log("No user found, attempting anonymous sign-in...");
             try {
-              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                // Use the provided custom token if available
-                console.log("Attempting sign-in with custom token...");
-                await signInWithCustomToken(authInstance, __initial_auth_token);
-              } else {
-                // Fallback to anonymous sign-in
-                console.log("Attempting anonymous sign-in...");
-                await signInAnonymously(authInstance);
-              }
+              await signInAnonymously(authInstance);
+              // The onAuthStateChanged listener will fire again once
+              // the anonymous sign-in is complete, setting the user.
             } catch (error) {
-              console.error("Firebase sign-in error:", error);
+              console.error("Firebase anonymous sign-in error:", error);
               setIsAuthReady(true); // Still ready, but auth failed
             }
           }
@@ -159,7 +157,8 @@ export default function App() {
         console.error("Firebase initialization error:", error);
       }
     } else {
-      console.warn("__firebase_config is not defined. AI tool will be disabled.");
+      // This will happen if you forget to add the env variables to Vercel
+      console.warn("Firebase config environment variables (VITE_FIREBASE_...) are not set. AI tool will be disabled.");
     }
   }, []); // Empty dependency array ensures this runs only once
 
@@ -191,7 +190,7 @@ export default function App() {
   );
 }
 
-// --- Page Sections ---
+// --- Page Sections (Unchanged) ---
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -598,7 +597,7 @@ function Footer() {
 }
 
 
-// --- Re-usable Components ---
+// --- Re-usable Components (Unchanged) ---
 
 function SocialCompareTable({ data }) {
   const CheckMark = () => <Check className="h-5 w-5 text-emerald-400 mx-auto" />;
@@ -632,7 +631,7 @@ function SocialCompareTable({ data }) {
               <p className="text-xs text-white/60">{plan.nickname}</p>
               <div className="flex items-baseline gap-2 mt-2">
                 <div className="text-xl font-bold">₹{new Intl.NumberFormat("en-IN").format(plan.price)}</div>
-                <div className="text-xs text-white/50 line-through">₹{new Intl.NumberFormat("en-IN").format(plan.mrp)}</div>
+                <div classNameVITE_FIREBASE_API_KEY="text-xs text-white/50 line-through">₹{new Intl.NumberFormat("en-IN").format(plan.mrp)}</div>
               </div>
             </div>
           ))}
@@ -853,7 +852,7 @@ function BlogCard({ post }) {
         <img 
           src={post.img} 
           alt={post.title} 
-          className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105" 
+          className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-1WELCOME" 
           onError={(e) => { e.target.src = 'https://placehold.co/600x400/0B0F19/FFFFFF?text=Image'; }}
         />
       </div>
