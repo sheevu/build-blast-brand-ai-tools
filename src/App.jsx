@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Sparkles, Rocket, Bot, ShoppingBag, Star, 
   Check, X, ArrowRight, Menu, XIcon 
-} from "lucide-react"; // Import all required icons
+} from "lucide-react";
+
+// Import new Firebase modules
+import { initializeApp } from 'firebase/app';
+import { 
+  getAuth, 
+  signInAnonymously, 
+  signInWithCustomToken, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { getFirestore, setLogLevel } from 'firebase/firestore';
+
+// Import the new AI Presence Analyzer component
+import OnlinePresenceAnalyzer from './OnlinePresenceAnalyzer.jsx';
 
 // --- Animation Variants ---
-
 const floatIn = { 
   hidden: { opacity: 0, y: 40 }, 
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
 };
-
 const staggerContainer = { 
   hidden: {}, 
   visible: { transition: { staggerChildren: 0.1 } } 
 };
-
 
 // --- Data Sources (from CSVs) ---
 
@@ -96,15 +106,78 @@ const blogPostsData = [
 // --- Main App Component ---
 
 export default function App() {
+  // --- Firebase State ---
+  const [auth, setAuth] = useState(null);
+  const [db, setDb] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
+
+  // --- Firebase Initialization Effect ---
+  useEffect(() => {
+    // Check if Firebase config is available from the environment
+    if (typeof __firebase_config !== 'undefined') {
+      try {
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const authInstance = getAuth(app);
+        const dbInstance = getFirestore(app);
+        
+        // Enable detailed logging for Firestore
+        setLogLevel('debug'); 
+
+        setAuth(authInstance);
+        setDb(dbInstance);
+
+        // --- Authentication Logic ---
+        onAuthStateChanged(authInstance, async (user) => {
+          if (user) {
+            // User is signed in
+            setUserId(user.uid);
+            setIsAuthReady(true);
+            console.log("User is signed in with UID:", user.uid);
+          } else {
+            // User is signed out, try to sign in
+            console.log("No user found, attempting sign-in...");
+            try {
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                // Use the provided custom token if available
+                console.log("Attempting sign-in with custom token...");
+                await signInWithCustomToken(authInstance, __initial_auth_token);
+              } else {
+                // Fallback to anonymous sign-in
+                console.log("Attempting anonymous sign-in...");
+                await signInAnonymously(authInstance);
+              }
+            } catch (error) {
+              console.error("Firebase sign-in error:", error);
+              setIsAuthReady(true); // Still ready, but auth failed
+            }
+          }
+        });
+
+      } catch (error) {
+        console.error("Firebase initialization error:", error);
+      }
+    } else {
+      console.warn("__firebase_config is not defined. AI tool will be disabled.");
+    }
+  }, []); // Empty dependency array ensures this runs only once
+
+  // --- Render ---
   return (
-    // Base font is set to 'font-sans' (Inter) in index.css
     <div className="min-h-screen bg-[#0B0F19] text-white font-sans antialiased">
       <NeonGridBackdrop />
       <GlowBlobs />
       <Header />
-      {/* Set overflow-x-hidden on main to prevent horizontal scroll from animations */}
       <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 md:px-6 md:pt-16 overflow-x-hidden">
         <Hero />
+        
+        {/* --- AI Tool Section --- */}
+        {/* This section now correctly renders the AI Analyzer tool */}
+        {isAuthReady && db && auth && (
+          <AiPresenceAnalyzerSection db={db} auth={auth} userId={userId} />
+        )}
+        
         <About />
         <Services />
         <PricingSection />
@@ -123,8 +196,8 @@ export default function App() {
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // Added "Blog" to nav links
   const navLinks = [
+    { href: "#analyzer", label: "AI Analyzer" }, // Link to the new tool
     { href: "#about", label: "About" },
     { href: "#services", label: "Services" },
     { href: "#pricing", label: "Pricing" },
@@ -239,15 +312,15 @@ function Hero() {
           <span>AI Enabled Growth • Lucknow Launchpad</span>
         </motion.div>
 
-        {/* Updated SEO Headline */}
-        <motion.h1 variants={floatIn} className="text-4xl sm:text-5xl md:text-6xl leading-tight font-semibold">
-          <span className="block text-white">Scale Your Dhandha.</span>
-          <span className="mt-1 inline-block bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] bg-clip-text text-transparent">Lucknow's AI Growth Engine.</span>
+        {/* --- UPDATED HERO TITLE --- */}
+        <motion.h1 variants={floatIn} className="text-4xl sm:text-5xl md:text-5xl leading-tight font-semibold">
+          <span className="block text-white">Best Digital Marketing Services in Lucknow</span>
+          <span className="mt-1 inline-block bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] bg-clip-text text-transparent">Empowering Bharat’s Businesses for a Self-Reliant Future</span>
         </motion.h1>
 
-        {/* Updated SEO Sub-headline */}
-        <motion.p variants={floatIn} className="max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-          Grow your MSME with AI-powered WhatsApp automation, smart catalogs, and local-first lead generation. Practical, affordable, and tuned to your mohalla.
+        {/* --- UPDATED HERO TAGLINE --- */}
+        <motion.p variants={floatIn} className="max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
+          “Vyapaar ka AI Yug – हर दुकानदार की डिजिटल क्रांति”
         </motion.p>
 
         {/* Action Buttons */}
@@ -303,6 +376,30 @@ function Hero() {
     </section>
   );
 }
+
+// --- This is the section that imports and displays your new tool ---
+function AiPresenceAnalyzerSection({ db, auth, userId }) {
+  return (
+    <section id="analyzer" className="mt-20 md:mt-32">
+       <SectionHeader 
+        eyebrow="Free AI Tool" 
+        title="AI Online Presence Analyzer" 
+        subtitle="Enter your business name and location to get a free AI-powered analysis of your online presence and actionable tips for growth."
+      />
+      <motion.div 
+        className="mt-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        {/* Here is the connection to your OnlinePresenceAnalyzer.jsx file */}
+        <OnlinePresenceAnalyzer db={db} auth={auth} userId={userId} />
+      </motion.div>
+    </section>
+  );
+}
+
 
 function About() {
   return (
