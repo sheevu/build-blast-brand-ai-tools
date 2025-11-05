@@ -9,7 +9,15 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
  * Calls the Gemini API with Google Search grounding.
  */
 const callGeminiApiWithSearch = async (systemPrompt, userQuery) => {
-  const apiKey = ""; // API key is handled by the environment
+  // --- UPDATED (FOR VERCEL/Local) ---
+  // Read the API key from Vercel's environment variables
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+  if (!apiKey) {
+    console.error("VITE_GEMINI_API_KEY is not set.");
+    throw new Error("AI service is not configured. Missing API Key.");
+  }
+  
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
   const payload = {
@@ -71,8 +79,12 @@ const callGeminiApiWithSearch = async (systemPrompt, userQuery) => {
  * Saves the analysis log to Firestore.
  */
 const saveAnalysisToFirestore = async (db, userId, businessName, location, result) => {
-  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+  // --- UPDATED (FOR VERCEL/Local) ---
+  // Read the App ID from Vercel's env variables, with a fallback
+  const appId = import.meta.env.VITE_APP_ID || 'sudarshan-ai-labs-prod';
+
   // Use a new collection for this specific tool
+  // This path is now correct for YOUR production Firestore database
   const analysisPath = `/artifacts/${appId}/users/${userId}/presence_analysis`;
   
   try {
@@ -123,8 +135,9 @@ export default function OnlinePresenceAnalyzer({ db, auth, userId }) {
       // Simple Markdown-to-HTML (for bold text and lists)
       const formattedText = generatedText
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
-        .replace(/^\* (.*)$/gm, '<li class="mt-2">$1</li>') // List items
+        .replace(/^(?!\s*<h[1-6]>)\* (.*)$/gm, '<li class="mt-2">$1</li>') // List items, avoids headings
         .replace(/(\<li.*\>[\s\S]*\<\/li\>)/g, '<ul class="list-disc list-outside pl-5 mt-2">$1</ul>'); // Wrap lists
+
 
       setResult(formattedText);
       // Save to Firestore (don't block UI)
