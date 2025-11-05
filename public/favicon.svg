@@ -1,6 +1,27 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none"
-  xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="16" fill="#0B0F19"/>
-  <circle cx="32" cy="32" r="18" fill="#00FFFF"/>
-  <path d="M24 34L30 28L36 34L40 30" stroke="#0B0F19" stroke-width="2" stroke-linecap="round"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="64" height="64" rx="16" fill="url(#paint0_linear_101_2)"/>
+<g filter="url(#filter0_d_101_2)">
+<!-- Simple Bot Icon -->
+<path d="M32.0003 21.333C32.0003 19.124 30.2093 17.333 28.0003 17.333C25.7913 17.333 24.0003 19.124 24.0003 21.333V29.333C24.0003 31.542 25.7913 33.333 28.0003 33.333C30.2093 33.333 32.0003 31.542 32.0003 29.333V21.333Z" fill="white"/>
+<path d="M40.0003 29.333C40.0003 31.542 38.2093 33.333 36.0003 33.333C33.7913 33.333 32.0003 31.542 32.0003 29.333V21.333C32.0003 19.124 33.7913 17.333 36.0003 17.333C38.2093 17.333 40.0003 19.124 40.0003 21.333V29.333Z" fill="white"/>
+<path d="M21.3337 42.667C21.3337 44.876 19.5427 46.667 17.3337 46.667C15.1247 46.667 13.3337 44.876 13.3337 42.667V34.667C13.3337 32.458 15.1247 30.667 17.3337 30.667C19.5427 30.667 21.3337 32.458 21.3337 34.667V42.667Z" fill="white"/>
+<path d="M46.6663 42.667C46.6663 44.876 44.8753 46.667 42.6663 46.667C40.4573 46.667 38.6663 44.876 38.6663 42.667V34.667C38.6663 32.458 40.4573 30.667 42.6663 30.667C44.8753 30.667 46.6663 32.458 46.6663 34.667V42.667Z" fill="white"/>
+<path d="M34.6663 46.667C34.6663 48.876 32.8753 50.667 30.6663 50.667C28.4573 50.667 26.6663 48.876 26.6663 46.667V38.667C26.6663 36.458 28.4573 34.667 30.6663 34.667C32.8753 34.667 34.6663 36.458 34.6663 38.667V46.667Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_101_2" x="-4" y="-2" width="72" height="72" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="8"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.498039 0 0 0 0 0 0 0 0 0 1 0 0 0 0.7 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_101_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_101_2" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_101_2" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7F00FF"/>
+<stop offset="1" stop-color="#00FFFF"/>
+</linearGradient>
+</defs>
 </svg>
