@@ -29,7 +29,8 @@ const staggerContainer = {
 };
 
 // --- Data Sources (from CSVs) ---
-// [Data arrays omitted for brevity, but they are unchanged]
+
+// Transcribed and updated from 'pricing - MainSheet.csv' and 'pricing - Info.csv'
 const pricingPlans = [
   // Category: bundle (Launch Packs)
   { id: "swaraj-89", label: "Swaraj Tech Pack", nickname: "Nano launch pad", category: "bundle", mrp: 999, price: 89, blurb: "Launch your MSME online—Lucknow’s most affordable tech bundle!" },
@@ -47,10 +48,12 @@ const pricingPlans = [
   { id: "consult-499", label: "1:1 Growth Consultation", nickname: "Strategy jam", category: "individual", mrp: 3500, price: 499, blurb: "1:1 strategy session with an AI growth expert for MSMEs." },
   { id: "catalog-pro-599", label: "Catalog Builder Pro", nickname: "Smart catalog", category: "individual", mrp: 1499, price: 599, blurb: "Build an AI-powered e-commerce catalog for WhatsApp & Google." },
   { id: "seo-599", label: "SEO & Content Boost", nickname: "Rank lift", category: "individual", mrp: 1899, price: 599, blurb: "Basic SEO/GMB audit + 90-day content plan for MSMEs." },
-  { id:ja: "Custom Landing Page", nickname: "Conversion page", category: "individual", mrp: 3500, price: 1299, blurb: "High-conversion landing page for your MSME, built for ads." },
+  { id: "landing-page-1299", label: "Custom Landing Page", nickname: "Conversion page", category: "individual", mrp: 3500, price: 1299, blurb: "High-conversion landing page for your MSME, built for ads." },
   { id: "bio-link-229", label: "All Bio Link+GMB", nickname: "Online presence", category: "individual", mrp: 1200, price: 229, blurb: "Get your 'All-in-one' bio link + verified Google Business Profile." },
   { id: "pr-launch-899", label: "PR Launch", nickname: "Get featured", category: "individual", mrp: 2499, price: 899, blurb: "Affordably launch your MSME with digital PR for instant trust." },
 ];
+
+// Transcribed from 'pricing - Social media Info.csv'
 const socialFeaturesData = [
   { feature: "Target Business", foundation: "New MSMEs, Startup/MUDRA", expansion: "Growing MSMEs, MSME Champions", dominance: "Established MSMEs, Export" },
   { feature: "Promotion Posters", foundation: "10", expansion: "15", dominance: "30" },
@@ -69,11 +72,15 @@ const socialFeaturesData = [
   { feature: "Fund Application Support", foundation: "✅", expansion: "✅", dominance: "✅" },
   { feature: "Digital Marketing Training", foundation: "Basic guide", expansion: "Advanced workshops", dominance: "Complete digital transformation" },
 ];
+
+// Data for Testimonials Section
 const testimonialsData = [
   { name: "Aisha", area: "Hazratganj", quote: "WhatsApp orders doubled. Simple, effective, and local." },
   { name: "Raghav", area: "Gomti Nagar", quote: "The meme campaigns were a hit! We saw instant engagement." },
   { name: "Meera", area: "Aliganj", quote: "Finally, a content calendar and AI hooks that make sense. Peace of mind." },
 ];
+
+// Data for new Blog Section
 const blogPostsData = [
   { 
     category: "AI Marketing", 
@@ -190,7 +197,7 @@ export default function App() {
   );
 }
 
-// --- Page Sections (Unchanged) ---
+// --- Page Sections ---
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -311,16 +318,16 @@ function Hero() {
           <span>AI Enabled Growth • Lucknow Launchpad</span>
         </motion.div>
 
-        {/* --- UPDATED HERO TITLE --- */}
+        {/* --- LATEST HERO TITLE & TAGLINE --- */}
         <motion.h1 variants={floatIn} className="text-4xl sm:text-5xl md:text-5xl leading-tight font-semibold">
           <span className="block text-white">Best Digital Marketing Services in Lucknow</span>
           <span className="mt-1 inline-block bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] bg-clip-text text-transparent">Empowering Bharat’s Businesses for a Self-Reliant Future</span>
         </motion.h1>
 
-        {/* --- UPDATED HERO TAGLINE --- */}
         <motion.p variants={floatIn} className="max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
           “Vyapaar ka AI Yug – हर दुकानदार की डिजिटल क्रांति”
         </motion.p>
+        {/* --- END LATEST HERO --- */}
 
         {/* Action Buttons */}
         <motion.div variants={floatIn} className="flex flex-col sm:flex-row gap-4">
@@ -597,7 +604,7 @@ function Footer() {
 }
 
 
-// --- Re-usable Components (Unchanged) ---
+// --- Re-usable Components ---
 
 function SocialCompareTable({ data }) {
   const CheckMark = () => <Check className="h-5 w-5 text-emerald-400 mx-auto" />;
@@ -631,7 +638,7 @@ function SocialCompareTable({ data }) {
               <p className="text-xs text-white/60">{plan.nickname}</p>
               <div className="flex items-baseline gap-2 mt-2">
                 <div className="text-xl font-bold">₹{new Intl.NumberFormat("en-IN").format(plan.price)}</div>
-                <div classNameVITE_FIREBASE_API_KEY="text-xs text-white/50 line-through">₹{new Intl.NumberFormat("en-IN").format(plan.mrp)}</div>
+                <div className="text-xs text-white/50 line-through">₹{new Intl.NumberFormat("en-IN").format(plan.mrp)}</div>
               </div>
             </div>
           ))}
@@ -852,7 +859,7 @@ function BlogCard({ post }) {
         <img 
           src={post.img} 
           alt={post.title} 
-          className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-1WELCOME" 
+          className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105" 
           onError={(e) => { e.target.src = 'https://placehold.co/600x400/0B0F19/FFFFFF?text=Image'; }}
         />
       </div>
