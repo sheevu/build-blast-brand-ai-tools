@@ -6,11 +6,14 @@ export default {
   ],
   theme: {
     extend: {
+      // Add the new fonts based on the design screenshot
       fontFamily: {
-        // As seen in your App.jsx
-        sans: ['Montserrat', 'system-ui'],
-        orbitron: ['Orbitron', 'system-ui'],
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'display': ['Lexend', 'system-ui', 'sans-serif'],
       },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      }
     },
   },
   plugins: [],
