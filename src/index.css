@@ -1,9 +1,3 @@
-/* Import Google Fonts:
-  - Inter: Used for all body text (font-sans)
-  - Lexend: Used for all headings (font-display)
-*/
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap');
-
 /* Initialize Tailwind CSS */
 @tailwind base;
 @tailwind components;
