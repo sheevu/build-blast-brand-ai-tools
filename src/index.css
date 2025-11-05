@@ -1,20 +1,26 @@
+/* Import Google Fonts:
+  - Inter: Used for all body text (font-sans)
+  - Lexend: Used for all headings (font-display)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap');
+
+/* Initialize Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
+/* Define base layer styles */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    /* Set base font to Inter (defined as 'font-sans' in tailwind.config.js) */
+    @apply font-sans bg-[#0B0F19] text-white antialiased;
+  }
 
-body {
-  margin: 0;
-  background-color: #0B0F19;
-  color: #ffffff;
-  font-family: "Montserrat", system-ui, sans-serif;
-}
-
-html,
-body,
-#root {
-  height: 100%;
+  /* Style all headings to use Lexend (defined as 'font-display') */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold;
+  }
 }
