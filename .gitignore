@@ -7,3 +7,9 @@ Thumbs.db
 *.tmp
 pnpm-lock.yaml
 yarn.lock
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
