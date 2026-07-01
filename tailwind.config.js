@@ -8,7 +8,7 @@ export default {
     extend: {
       // Add the new fonts based on the design screenshot
       fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'sans': ['Lexend', 'system-ui', 'sans-serif'],
         'display': ['Lexend', 'system-ui', 'sans-serif'],
       },
       animation: {

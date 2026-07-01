@@ -7,14 +7,58 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    font-size: clamp(16px, 0.22vw + 15.4px, 17px);
   }
   body {
     /* Set base font to Inter (defined as 'font-sans' in tailwind.config.js) */
     @apply font-sans bg-[#0B0F19] text-white antialiased;
+    overflow-x: clip;
   }
 
   /* Style all headings to use Lexend (defined as 'font-display') */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-semibold;
+  }
+
+  section[id],
+  div[id] {
+    scroll-margin-top: 92px;
+  }
+
+  #root {
+    overflow-x: clip;
+  }
+}
+
+@layer components {
+  .section-divider-circuit {
+    background-size: 200% 100%, 12px 2px;
+    background-image:
+      linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.35), rgba(59, 130, 246, 0.78), rgba(34, 211, 238, 0.35), transparent),
+      repeating-linear-gradient(
+        90deg,
+        rgba(148, 163, 184, 0.08) 0,
+        rgba(148, 163, 184, 0.08) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+  }
+
+  .deferred-sections > section,
+  .deferred-sections > div {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

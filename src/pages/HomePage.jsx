@@ -5,30 +5,7 @@ import {
   Check, X, ArrowRight, Menu, XIcon, 
   MessageCircle, Phone, ChevronDown, BarChart3
 } from "lucide-react";
-import { Routes, Route } from 'react-router-dom';
-
-const OnlinePresenceAnalyzer = React.lazy(() => import('./components/OnlinePresenceAnalyzer.jsx'));
-
-// Lazy load the 19 individual service pages
-const TechSwarajPack = React.lazy(() => import('./pages/services/TechSwarajPack.jsx'));
-const KickStartPack = React.lazy(() => import('./pages/services/KickStartPack.jsx'));
-const VyapariUdaanPack = React.lazy(() => import('./pages/services/VyapariUdaanPack.jsx'));
-const SocialBoosterPack = React.lazy(() => import('./pages/services/SocialBoosterPack.jsx'));
-const DigitalDominatorPack = React.lazy(() => import('./pages/services/DigitalDominatorPack.jsx'));
-const GrowthProPack = React.lazy(() => import('./pages/services/GrowthProPack.jsx'));
-const TezRaftarBooster = React.lazy(() => import('./pages/services/TezRaftarBooster.jsx'));
-const BioLinkGMB = React.lazy(() => import('./pages/services/BioLinkGMB.jsx'));
-const CustomBusinessWebsite = React.lazy(() => import('./pages/services/CustomBusinessWebsite.jsx'));
-const LandingPage = React.lazy(() => import('./pages/services/LandingPage.jsx'));
-const SocialMediaMarketing = React.lazy(() => import('./pages/services/SocialMediaMarketing.jsx'));
-const SEOContentBoost = React.lazy(() => import('./pages/services/SEOContentBoost.jsx'));
-const WhatsAppBusinessBot = React.lazy(() => import('./pages/services/WhatsAppBusinessBot.jsx'));
-const ResearchArticleWriting = React.lazy(() => import('./pages/services/ResearchArticleWriting.jsx'));
-const ResumeWriting = React.lazy(() => import('./pages/services/ResumeWriting.jsx'));
-const AIChatbotAssistant = React.lazy(() => import('./pages/services/AIChatbotAssistant.jsx'));
-const ExcelSheetsAutomation = React.lazy(() => import('./pages/services/ExcelSheetsAutomation.jsx'));
-const SaaSDevelopment = React.lazy(() => import('./pages/services/SaaSDevelopment.jsx'));
-const BusinessGrowthConsultation = React.lazy(() => import('./pages/services/BusinessGrowthConsultation.jsx'));
+import OnlinePresenceAnalyzer from '../components/OnlinePresenceAnalyzer';
 
 
 // --- Animation Variants ---
@@ -736,7 +713,7 @@ const detailPages = [
 
 // --- Main App Component ---
 
-export default function App() {
+const HomePage = () => {
   // --- Firebase State ---
   const [auth, setAuth] = useState(null);
   const [db, setDb] = useState(null);
@@ -894,90 +871,58 @@ export default function App() {
 
   // --- Render ---
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#0B0F19] text-white font-sans">
-        <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-emerald-400"></div>
-          <p className="text-sm font-semibold tracking-wider uppercase text-emerald-300">Loading...</p>
-        </div>
-      </div>
-    }>
-      <Routes>
-        <Route path="/" element={
-          <div className="min-h-screen overflow-x-clip bg-[#0B0F19] text-white font-sans antialiased">
-            <ScrollProgressBar />
-            {showAmbientLayers && !shouldReduceMotion && <NeonGridBackdrop />}
-            {showAmbientLayers && !shouldReduceMotion && <GlowBlobs />}
-            {showAmbientLayers && !shouldReduceMotion && <ScrollMotionAura />}
-            <Header isDetailView={isDetailView} />
-            <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 md:px-6 md:pt-16 overflow-x-hidden">
-              {isDetailView ? (
-                <DetailPageView detailId={activeDetailId} />
-              ) : (
-                <>
-                  <Hero />
-                  <SectionDivider />
-                  <ValuePropsSection />
-                  {showDeferredSections && (
-                    <div className="deferred-sections">
-                      <SectionDivider />
-                      <HowItWorksSection />
-                      <SectionDivider />
-                      <PlatformPillarsSection />
-                      <SectionDivider />
-                      <RevenueStrip />
-                      <SectionDivider />
-                      <WhySudarshan />
-                      <SectionDivider />
-                      <PlansSection />
-                      <SectionDivider />
-                      <SectorsSection />
-                      <SectionDivider />
-                      <ProofSection />
-                      <SectionDivider />
-                      <Campaigns />
-                      <SectionDivider />
-                      <Testimonials />
-                      <SectionDivider />
-                      <BlogSection />
-                      <SectionDivider />
-                      <FaqSection />
-                      <CTA />
-                      <SectionDivider />
-                      {/* --- AI Tool Section relocated just above footer --- */}
-                      {isAuthReady && db && auth && (
-                        <AiPresenceAnalyzerSection db={db} auth={auth} userId={userId} />
-                      )}
-                    </div>
-                  )}
-                </>
-              )}
-            </main>
-            <FloatingCTA />
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/TechSwarajPack" element={<TechSwarajPack />} />
-        <Route path="/services/KickStartPack" element={<KickStartPack />} />
-        <Route path="/services/VyapariUdaanPack" element={<VyapariUdaanPack />} />
-        <Route path="/services/SocialBoosterPack" element={<SocialBoosterPack />} />
-        <Route path="/services/DigitalDominatorPack" element={<DigitalDominatorPack />} />
-        <Route path="/services/GrowthProPack" element={<GrowthProPack />} />
-        <Route path="/services/TezRaftarBooster" element={<TezRaftarBooster />} />
-        <Route path="/services/BioLinkGMB" element={<BioLinkGMB />} />
-        <Route path="/services/CustomBusinessWebsite" element={<CustomBusinessWebsite />} />
-        <Route path="/services/LandingPage" element={<LandingPage />} />
-        <Route path="/services/SocialMediaMarketing" element={<SocialMediaMarketing />} />
-        <Route path="/services/SEOContentBoost" element={<SEOContentBoost />} />
-        <Route path="/services/WhatsAppBusinessBot" element={<WhatsAppBusinessBot />} />
-        <Route path="/services/ResearchArticleWriting" element={<ResearchArticleWriting />} />
-        <Route path="/services/ResumeWriting" element={<ResumeWriting />} />
-        <Route path="/services/AIChatbotAssistant" element={<AIChatbotAssistant />} />
-        <Route path="/services/ExcelSheetsAutomation" element={<ExcelSheetsAutomation />} />
-        <Route path="/services/SaaSDevelopment" element={<SaaSDevelopment />} />
-        <Route path="/services/BusinessGrowthConsultation" element={<BusinessGrowthConsultation />} />
-      </Routes>
-    </Suspense>
+    <div className="min-h-screen overflow-x-clip bg-[#0B0F19] text-white font-sans antialiased">
+      <ScrollProgressBar />
+      {showAmbientLayers && !shouldReduceMotion && <NeonGridBackdrop />}
+      {showAmbientLayers && !shouldReduceMotion && <GlowBlobs />}
+      {showAmbientLayers && !shouldReduceMotion && <ScrollMotionAura />}
+      <Header isDetailView={isDetailView} />
+      <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 md:px-6 md:pt-16 overflow-x-hidden">
+        {isDetailView ? (
+          <DetailPageView detailId={activeDetailId} />
+        ) : (
+          <>
+            <Hero />
+            <SectionDivider />
+            <ValuePropsSection />
+            {showDeferredSections && (
+              <div className="deferred-sections">
+                <SectionDivider />
+                <HowItWorksSection />
+                <SectionDivider />
+                <PlatformPillarsSection />
+                <SectionDivider />
+                <RevenueStrip />
+                <SectionDivider />
+                <WhySudarshan />
+                <SectionDivider />
+                <PlansSection />
+                <SectionDivider />
+                <SectorsSection />
+                <SectionDivider />
+                <ProofSection />
+                <SectionDivider />
+                <Campaigns />
+                <SectionDivider />
+                <Testimonials />
+                <SectionDivider />
+                <BlogSection />
+                <SectionDivider />
+                <FaqSection />
+                <CTA />
+                <SectionDivider />
+                {/* --- AI Tool Section relocated just above footer --- */}
+                {isAuthReady && db && auth && (
+                  <AiPresenceAnalyzerSection db={db} auth={auth} userId={userId} />
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </main>
+      <FloatingCTA />
+      <Footer />
+    </div>
   );
 }
 
@@ -2058,963 +2003,460 @@ function BlogSection() {
   );
 }
 
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleFaq = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <section id="faq" className="mt-20 md:mt-32">
+      <SectionHeader eyebrow="Common questions" title="Straightforward answers" subtitle="Everything you need to know before you start your growth journey." detailId="faq" />
+      <motion.div 
+        initial="hidden" 
+        whileInView="visible" 
+        viewport={{ once: true, amount: 0.2 }} 
+        variants={staggerContainer} 
+        className="mt-10 max-w-3xl mx-auto"
+      >
+        {faqItems.map((item, index) => (
+          <motion.div key={item.question} variants={floatIn} className="border-b border-white/10">
+            <button
+              onClick={() => toggleFaq(index)}
+              className="flex w-full items-center justify-between py-6 text-left"
+            >
+              <span className="text-lg font-medium text-white/90">{item.question}</span>
+              <ChevronDown
+                className={`h-6 w-6 text-white/70 transition-transform ${openIndex === index ? "rotate-180" : ""}`}
+              />
+            </button>
+            <AnimatePresence>
+              {openIndex === index && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="pb-6 text-base leading-relaxed text-white/70">{item.answer}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        ))}
+      </motion.div>
+    </section>
+  );
+}
+
 function CTA() {
   return (
-    <section id="cta" className="mt-20 md:mt-32 p-[1px] rounded-[28px] bg-gradient-to-r from-[#001F3F] via-[#050814] to-[#120022]">
-      <motion.div
-        className="rounded-[27px] bg-black/80 backdrop-blur-sm p-8 flex flex-col md:flex-row md:justify-between md:items-center gap-6"
-        initial={{ opacity: 0.6 }}
-        animate={{ opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <div>
-          <p className="text-xs uppercase text-emerald-200">Ready for 2025 growth?</p>
-          <h3 className="text-2xl md:text-3xl">Launch your AI HQ for ₹89</h3>
-          <p className="text-white/70 mt-2">Get Udyam registration, localized SEO page, WhatsApp catalog, and Hindi CRM in a single agentic flow.</p>
-        </div>
-        <div className="flex flex-col gap-3">
-          <a href="https://wa.me/+917388833006" target="_blank" rel="noopener noreferrer" className="group w-full md:w-auto inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] px-6 py-3 text-black font-semibold shadow-[0_0_25px_rgba(0,241,160,0.7)] transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,241,160,1)] hover:scale-105">
-            DM on WhatsApp
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </a>
-          <a
-            href="https://agent.jotform.com/019aa7fd4aaa7cccb0ce1b2c0748666c3478"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full md:w-auto items-center justify-center gap-2 rounded-full border border-cyan-300/35 bg-cyan-300/10 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-300/20"
-          >
-            2nd Contact Agent
-            <ArrowRight className="h-4 w-4" />
-          </a>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
-function PlanCategoryCard({ category }) {
-  return (
-    <motion.div
-      className="relative flex h-full flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-transparent to-black/[0.45] p-6 text-center shadow-[0_32px_80px_-45px_rgba(59,130,246,0.65)] transition-all duration-500 hover:border-[#3b82f6]/60 hover:-translate-y-2 sm:text-left"
-      variants={floatIn}
-    >
-      <div>
-        <p className="text-[10px] uppercase tracking-[0.24em] text-emerald-200/80">
-          {category.subtitle}
-        </p>
-        <h3 className="mt-3 text-2xl font-semibold text-white">{category.label}</h3>
-        <p className="mt-2 text-sm text-white/70 leading-relaxed">
-          {category.description}
-        </p>
-        <ul className="mt-5 space-y-2 text-xs text-white/65">
-          {category.bullets.map((item) => (
-            <li key={item} className="flex items-start gap-2 justify-center sm:justify-start">
-              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[#22d3ee] to-[#9333ea]" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <a
-        href={category.ctaHref}
-        className="group mt-8 inline-flex items-center justify-center gap-2 text-sm font-medium text-emerald-300 transition-all sm:justify-start"
-      >
-        {category.ctaLabel}
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-      </a>
-    </motion.div>
-  );
-}
-
-function PlansTable({ plans }) {
-  const servicePathMap = {
-    "Swaraj Tech Pack": "/services/TechSwarajPack",
-    "Tech Swaraj Pack": "/services/TechSwarajPack",
-    "Prarambh Kick-Start Pack": "/services/KickStartPack",
-    "Kick-Start Pack": "/services/KickStartPack",
-    "Udaan Vyapari Pack": "/services/VyapariUdaanPack",
-    "Vyapari Udaan Pack": "/services/VyapariUdaanPack",
-    "Vikas Growth Pro Pack": "/services/GrowthProPack",
-    "Growth Pro Pack": "/services/GrowthProPack",
-    "Prabhav Dominator Pack": "/services/DigitalDominatorPack",
-    "Digital Dominator Pack": "/services/DigitalDominatorPack",
-    "Raftar Booster Pack": "/services/TezRaftarBooster",
-    "Tez Raftar Booster": "/services/TezRaftarBooster",
-    "Social Booster Pack": "/services/SocialBoosterPack",
-    "Samajik Booster Pack": "/services/SocialBoosterPack",
-    "All Bio Link + Verified GMB (5 links)": "/services/BioLinkGMB",
-    "Bio Link + Google My Business (Verified)": "/services/BioLinkGMB",
-    "Full Custom Website (5 pages)": "/services/CustomBusinessWebsite",
-    "Custom Business Website (5 Pages)": "/services/CustomBusinessWebsite",
-    "Landing Pages (Lead Generation)": "/services/LandingPage",
-    "Landing Page (Lead Generation)": "/services/LandingPage",
-    "Social Media Marketing": "/services/SocialMediaMarketing",
-    "Social Media Marketing (SMM)": "/services/SocialMediaMarketing",
-    "SEO & Content Boost": "/services/SEOContentBoost",
-    "WhatsApp Automation & Meta Suite (Basic)": "/services/WhatsAppBusinessBot",
-    "WhatsApp Business Bot": "/services/WhatsAppBusinessBot",
-    "Research, Blogs & Article Writing": "/services/ResearchArticleWriting",
-    "Research & Article Writing": "/services/ResearchArticleWriting",
-    "Resume Writing": "/services/ResumeWriting",
-    "AI Chatbot & Assistant": "/services/AIChatbotAssistant",
-    "AI Chatbot & Virtual Assistant": "/services/AIChatbotAssistant",
-    "Excel & Google Sheets Automation": "/services/ExcelSheetsAutomation",
-    "SaaS & AI Tool Development (MVP)": "/services/SaaSDevelopment",
-    "Business Growth Consultation": "/services/BusinessGrowthConsultation"
-  };
-
-  const fmt = new Intl.NumberFormat("en-IN");
-  const [hoveredRow, setHoveredRow] = useState(null);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const formatCurrency = (value) =>
-    typeof value === "number" && !Number.isNaN(value) ? `₹${fmt.format(value)}` : "On request";
-  const formatCadence = (cadence = "") =>
-    cadence
-      .toLowerCase()
-      .replace(/^one-time/, "One-time")
-      .replace(/^per/, "Per");
-
-  const getPlanBadge = (savingPercent, hasPricing) => {
-    if (!hasPricing) return { label: "Custom", tone: "border-cyan-300/35 bg-cyan-300/10 text-cyan-100" };
-    if (savingPercent >= 85) return { label: "Hot Deal", tone: "border-emerald-300/50 bg-emerald-300/15 text-emerald-100" };
-    if (savingPercent >= 70) return { label: "Best Value", tone: "border-sky-300/45 bg-sky-300/10 text-sky-100" };
-    if (savingPercent >= 55) return { label: "Growth Pick", tone: "border-violet-300/45 bg-violet-300/10 text-violet-100" };
-    return { label: "Flexible", tone: "border-white/20 bg-white/10 text-white/70" };
-  };
-
-  const handleRowPointer = (event, rowName) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setHoveredRow(rowName);
-    setCursorPosition({
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-    });
-  };
-
-  return (
-    <>
-      <div className="hidden md:block overflow-x-auto">
-        <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4">
-          <p className="text-xs uppercase tracking-[0.22em] text-emerald-200/80">Interactive pricing matrix</p>
-          <p className="text-xs text-white/60">{plans.length} options • hover rows to inspect value</p>
-        </div>
-        <table className="w-full min-w-[860px] text-left text-sm text-white/80">
-          <thead className="bg-gradient-to-r from-white/[0.14] via-white/[0.02] to-white/[0.06] text-xs uppercase tracking-[0.16em] text-emerald-200/85">
-            <tr>
-              <th className="px-6 py-4">Plan</th>
-              <th className="px-6 py-4">Category</th>
-              <th className="px-6 py-4 text-right">MRP</th>
-              <th className="px-6 py-4 text-right">Sale price</th>
-              <th className="px-6 py-4 text-right">Savings</th>
-              <th className="px-6 py-4">Cadence</th>
-              <th className="px-6 py-4">What you get</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {plans.map((plan) => {
-              const hasPricing = typeof plan.mrp === "number" && typeof plan.price === "number";
-              const savingAmount = hasPricing ? plan.mrp - plan.price : null;
-              const savingPercent = hasPricing
-                ? Math.round(((plan.mrp - plan.price) / plan.mrp) * 100)
-                : null;
-              const badge = getPlanBadge(savingPercent, hasPricing);
-
-              return (
-                <tr
-                  key={plan.name}
-                  onMouseMove={(event) => handleRowPointer(event, plan.name)}
-                  onMouseLeave={() => setHoveredRow(null)}
-                  className="border-b border-white/5 transition-colors duration-300 hover:bg-white/[0.03]"
-                  style={
-                    hoveredRow === plan.name
-                      ? {
-                          backgroundImage: `radial-gradient(340px circle at ${cursorPosition.x}px ${cursorPosition.y}px, rgba(45,212,191,0.18), rgba(56,189,248,0.12) 34%, rgba(5,8,20,0) 72%)`,
-                        }
-                      : undefined
-                  }
-                >
-                  <td className="px-6 py-4">
-                    <div className="flex flex-col gap-2">
-                      {servicePathMap[plan.name] ? (
-                        <a 
-                          href={servicePathMap[plan.name]} 
-                          className="font-semibold text-white hover:text-emerald-300 transition duration-200 underline decoration-dashed decoration-white/20 hover:decoration-emerald-300/40"
-                        >
-                          {plan.name}
-                        </a>
-                      ) : (
-                        <p className="font-semibold text-white">{plan.name}</p>
-                      )}
-                      <span className={`inline-flex w-fit rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${badge.tone}`}>
-                        {badge.label}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-white/70">
-                    <span className="rounded-full border border-white/15 bg-white/[0.05] px-3 py-1 text-[11px] uppercase tracking-[0.14em]">
-                      {plan.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right text-white/55">
-                    {hasPricing ? formatCurrency(plan.mrp) : "—"}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <p className="font-semibold text-emerald-300">
-                      {hasPricing ? formatCurrency(plan.price) : "On request"}
-                    </p>
-                    {hasPricing && (
-                      <p className="mt-1 text-[11px] text-white/50 line-through">{formatCurrency(plan.mrp)}</p>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-right text-sky-200">
-                    <p className="font-semibold text-sky-300">
-                      {hasPricing && savingAmount >= 0
-                        ? `${formatCurrency(savingAmount)} • ${savingPercent}%`
-                        : "Tailored"}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4 text-white/65">
-                    <span className="rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-cyan-100">
-                      {formatCadence(plan.dashcadence || plan.cadence)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-white/70 leading-relaxed">{plan.description}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="grid gap-4 md:hidden">
-        {plans.map((plan) => {
-          const hasPricing = typeof plan.mrp === "number" && typeof plan.price === "number";
-          const savingAmount = hasPricing ? plan.mrp - plan.price : null;
-          const savingPercent = hasPricing
-            ? Math.round(((plan.mrp - plan.price) / plan.mrp) * 100)
-            : null;
-          const badge = getPlanBadge(savingPercent, hasPricing);
-
-          return (
-            <div
-              key={plan.name}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.09] via-white/[0.03] to-transparent p-4 shadow-[0_24px_70px_-45px_rgba(45,212,191,0.55)] transition-all duration-300 hover:border-emerald-300/45"
-            >
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: "linear-gradient(130deg, rgba(45,212,191,0.14), transparent 65%)" }} />
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                {servicePathMap[plan.name] ? (
-                  <a 
-                    href={servicePathMap[plan.name]} 
-                    className="text-base font-semibold text-white hover:text-emerald-300 transition duration-200 underline decoration-dashed decoration-white/20 hover:decoration-emerald-300/40"
-                  >
-                    {plan.name}
-                  </a>
-                ) : (
-                  <p className="text-base font-semibold text-white">{plan.name}</p>
-                )}
-                <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/70">
-                  {plan.category}
-                </span>
-              </div>
-              <span className={`mt-3 inline-flex rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${badge.tone}`}>
-                {badge.label}
-              </span>
-              <p className="mt-3 text-sm text-white/70">{plan.description}</p>
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <div className="text-lg font-semibold text-emerald-300">
-                  {hasPricing ? formatCurrency(plan.price) : "On request"}
-                </div>
-                {hasPricing && (
-                  <div className="text-xs text-white/60 line-through">
-                    {formatCurrency(plan.mrp)}
-                  </div>
-                )}
-                {hasPricing && savingAmount >= 0 && (
-                  <span className="rounded-full bg-gradient-to-r from-[#34d399] to-[#3b82f6] px-3 py-1 text-[11px] font-semibold text-black">
-                    Save {savingPercent}% ({formatCurrency(savingAmount)})
-                  </span>
-                )}
-              </div>
-              <p className="mt-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-cyan-100">
-                {formatCadence(plan.cadence)}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    </>
-  );
-}
-
-function DetailPageView({ detailId }) {
-  const page = detailPages.find((item) => item.id === detailId);
-  const [activeMetricIndex, setActiveMetricIndex] = useState(0);
-
-  useEffect(() => {
-    setActiveMetricIndex(0);
-  }, [detailId]);
-
-  useEffect(() => {
-    if (!page || !page.metrics?.length) return undefined;
-    const intervalId = window.setInterval(() => {
-      setActiveMetricIndex((prev) => (prev + 1) % page.metrics.length);
-    }, 3200);
-    return () => window.clearInterval(intervalId);
-  }, [page]);
-
-  if (!page) {
-    return (
-      <section className="mt-8">
-        <SectionHeader
-          eyebrow="Detailed Pages"
-          title="Choose a section to view the full blueprint"
-          subtitle="Every major section has a linked detailed page with execution and KPI context."
-        />
-        <DetailNavRail activeId="" />
-      </section>
-    );
-  }
-
-  const currentMetric = page.metrics[activeMetricIndex];
-  const relatedPages = page.related
-    .map((id) => detailPages.find((entry) => entry.id === id))
-    .filter(Boolean);
-
-  return (
-    <section className="mt-2 space-y-8" id="details-hub">
-      <DetailNavRail activeId={page.id} />
-
-      <motion.div
-        className="relative overflow-hidden rounded-[34px] border border-white/10 bg-gradient-to-br from-[#0f172a]/90 via-[#111827]/85 to-[#020617]/95 p-7 md:p-10"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-      >
-        <AuroraBlob className="top-[-20%] left-[-12%] h-72 w-72 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.24),rgba(15,23,42,0))]" />
-        <AuroraBlob className="bottom-[-25%] right-[-14%] h-72 w-72 bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.28),rgba(15,23,42,0))]" />
-
-        <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-emerald-200/80">{page.eyebrow}</p>
-            <h1 className="mt-4 text-3xl font-semibold text-white md:text-4xl">{page.title}</h1>
-            <p className="mt-4 text-base leading-relaxed text-white/75">{page.summary}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href={page.liveSection}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/85 transition hover:border-white/35 hover:bg-white/15"
-              >
-                Back to live section
-                <ArrowRight className="h-3 w-3" />
-              </a>
-              <a
-                href={`#details/${page.id}`}
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100"
-              >
-                Detailed page active
-              </a>
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-black/35 p-5 shadow-[0_22px_65px_-45px_rgba(59,130,246,0.75)]">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-emerald-200/80">Auto KPI stream</p>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`${page.id}-${currentMetric.label}-${currentMetric.value}`}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
-                transition={{ duration: 0.25 }}
-                className="mt-4 space-y-2"
-              >
-                <p className="text-sm text-white/70">{currentMetric.label}</p>
-                <p className="text-3xl font-semibold text-white">{currentMetric.value}</p>
-                <p className="text-sm text-cyan-100/90">{currentMetric.insight}</p>
-              </motion.div>
-            </AnimatePresence>
-            <motion.div
-              key={`metric-progress-${page.id}-${activeMetricIndex}`}
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 3, ease: "linear" }}
-              className="mt-5 h-1 rounded-full bg-gradient-to-r from-[#34d399] via-[#38bdf8] to-[#a855f7]"
-            />
-          </div>
-        </div>
-      </motion.div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
-        >
-          <h3 className="text-lg font-semibold text-white">Execution Blueprint</h3>
-          <ul className="mt-4 space-y-3 text-sm text-white/75">
-            {page.steps.map((step) => (
-              <li key={step} className="flex items-start gap-3">
-                <Check className="mt-0.5 h-4 w-4 text-emerald-300" />
-                <span>{step}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ delay: 0.05 }}
-          className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
-        >
-          <h3 className="text-lg font-semibold text-white">What You Get</h3>
-          <ul className="mt-4 space-y-3 text-sm text-white/75">
-            {page.deliverables.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <Sparkles className="mt-0.5 h-4 w-4 text-sky-300" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
+    <section id="cta" className="mt-24 md:mt-36">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="rounded-3xl border border-white/10 bg-gradient-to-r from-[#001F3F]/70 via-[#050814]/80 to-[#120022]/70 p-6"
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#120022]/90 via-[#001F3F]/60 to-[#0B0F19]/90 px-8 py-12 md:px-12 md:py-16 text-center"
       >
-        <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-200/80">Interlinked paths</p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          {relatedPages.map((related) => (
+        <AuroraBlob className="top-[-35%] left-[-25%] h-72 w-72 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.3),rgba(15,23,42,0))]" />
+        <AuroraBlob className="bottom-[-30%] right-[-15%] h-80 w-80 bg-[radial-gradient(circle_at_center,rgba(0,241,160,0.2),rgba(15,23,42,0))]" />
+        <div className="relative">
+          <SectionLabel>Ready to scale?</SectionLabel>
+          <h2 className="mt-4 text-3xl font-semibold text-white md:text-5xl">Launch your business for just ₹89</h2>
+          <p className="mt-4 max-w-xl mx-auto text-base text-white/70">
+            Click below to start your journey. For custom needs or a demo, get in touch via WhatsApp.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              key={related.id}
-              href={`#details/${related.id}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/80 transition hover:border-white/40 hover:text-white"
+              href="#plans"
+              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] px-6 py-3 text-base font-semibold text-black shadow-[0_0_30px_rgba(0,241,160,0.7)] transition-transform hover:scale-105"
             >
-              {related.id}
-              <ArrowRight className="h-3 w-3" />
+              <Rocket className="h-5 w-5" />
+              Get Started with ₹89
             </a>
-          ))}
-        </div>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href="https://wa.me/+917388833006"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] px-4 py-2 text-sm font-semibold text-black shadow-[0_0_20px_rgba(0,241,160,0.65)]"
-          >
-            WhatsApp CTA
-          </a>
-          <a
-            href="https://agent.jotform.com/019aa7fd4aaa7cccb0ce1b2c0748666c3478"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200/70 hover:bg-cyan-300/20"
-          >
-            2nd contact agent
-          </a>
+            <a
+              href="https://wa.me/+917388833006"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-base font-medium text-white/90 transition hover:bg-white/20"
+            >
+              <MessageCircle className="h-5 w-5" />
+              WhatsApp an Advisor
+            </a>
+          </div>
+          <p className="mt-6 text-xs text-white/50">Free Udyam registration included with all packs.</p>
         </div>
       </motion.div>
     </section>
   );
 }
 
-function DetailNavRail({ activeId }) {
-  return (
-    <div className="overflow-x-auto pb-2">
-      <div className="flex min-w-max gap-3">
-        <a
-          href="#hero"
-          className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/75 transition hover:border-white/35 hover:text-white"
-        >
-          Home sections
-        </a>
-        {detailPages.map((page) => (
-          <a
-            key={page.id}
-            href={`#details/${page.id}`}
-            className={`inline-flex items-center rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition ${
-              activeId === page.id
-                ? "border-emerald-300/70 bg-emerald-300/15 text-white"
-                : "border-white/20 bg-white/5 text-white/70 hover:border-white/35 hover:text-white"
-            }`}
-          >
-            {page.id}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
+function FloatingCTA() {
+  return(
+    <a href="https://wa.me/+917388833006" target="_blank" rel="noopener noreferrer" className="fixed bottom-5 right-5 z-40 flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] shadow-2xl transition-transform hover:scale-110">
+      <MessageCircle className="h-8 w-8 text-white" />
+    </a>
+  )
 }
 
 function Footer() {
   return (
-    <footer className="relative mt-16 overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#020617] py-16 text-sm text-white/75">
-      <AuroraBlob className="top-[-30%] left-[-10%] h-64 w-64 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.3),rgba(15,23,42,0))]" />
-      <AuroraBlob className="bottom-[-25%] right-[-15%] h-72 w-72 bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.28),rgba(15,23,42,0))]" />
-      <div className="relative mx-auto max-w-6xl px-4">
-        <div className="grid gap-8 lg:grid-cols-3 lg:items-start">
-          <div className="lg:col-span-2">
-            <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-white/[0.14] via-white/[0.04] to-transparent p-1 shadow-[0_40px_120px_-50px_rgba(59,130,246,0.55)]">
-              <div className="grid rounded-[32px] bg-black/40 px-5 py-8 sm:px-8 sm:py-10 md:grid-cols-[1.2fr_1fr] md:gap-10 md:px-12">
-                <div className="space-y-5">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white/85">
-                    Sudarshan AI Labs
-                  </span>
-                  <h3 className="text-2xl font-semibold text-white sm:text-3xl">
-                    Ready to turn ₹89 into your always-on growth engine?
-                  </h3>
-                  <p className="text-sm text-white/80 sm:text-base">
-                    Hop on a 15-minute discovery call with our Lucknow pod and see how fast agentic workflows can launch, automate, and scale your vyapaar.
-                  </p>
-                </div>
-                <div className="mt-6 flex flex-col gap-4 md:mt-0">
-                  <a
-                    href="https://wa.me/+917388833006"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#34d399] via-[#3b82f6] to-[#9333ea] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_0_35px_rgba(59,130,246,0.45)] transition hover:scale-105 hover:shadow-[0_0_45px_rgba(59,130,246,0.65)] sm:px-6 sm:py-3"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                    WhatsApp our team
-                  </a>
-                  <a
-                    href="https://agent.jotform.com/019aa7fd4aaa7cccb0ce1b2c0748666c3478"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2.5 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200/70 hover:bg-cyan-300/20 sm:px-6 sm:py-3"
-                  >
-                    2nd Contact Agent
-                  </a>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-xs text-white/70">
-                    <p>Office: Indira nagar , Lucknow — Serving MSMEs pan-India with remote pods in UP, NCR & Bharat.</p>
-                  </div>
-                </div>
+    <footer className="mt-24 border-t border-white/10 text-white/50">
+      <div className="mx-auto max-w-6xl px-4 py-8 md:px-6">
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="md:col-span-1">
+            <a href="#hero" className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7F00FF] to-[#00FFFF]">
+                <Bot className="h-6 w-6" />
               </div>
-            </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-emerald-300/80">Sudarshan AI Labs</p>
+                <p className="text-sm">MSME Growth Engine</p>
+              </div>
+            </a>
+            <p className="mt-4 text-sm">
+              Empowering Lucknow's local businesses with AI-driven marketing and automation.
+            </p>
           </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-              <h5 className="text-xs uppercase tracking-[0.22em] text-emerald-200/80">Explore</h5>
-              <ul className="mt-4 space-y-3 text-sm">
-                <li><a className="hover:text-white transition" href="#value">Why ₹89 Launchpad</a></li>
-                <li><a className="hover:text-white transition" href="#plans">Pricing & Bundles</a></li>
-                <li><a className="hover:text-white transition" href="#proof">Results & Proof</a></li>
-                <li><a className="hover:text-white transition" href="#analyzer">Free AI Analyzer</a></li>
-                <li><a className="hover:text-white transition" href="#blog">Insights & Blog</a></li>
-                <li><a className="hover:text-white transition" href="#details/value">Detailed pages</a></li>
+          <div className="grid grid-cols-2 gap-8 text-sm md:col-span-2">
+            <div>
+              <h3 className="font-semibold uppercase tracking-wider text-white/80">Navigation</h3>
+              <ul className="mt-4 space-y-2">
+                <li><a href="#value" className="hover:text-white">Why ₹89 Works</a></li>
+                <li><a href="#plans" className="hover:text-white">Pricing</a></li>
+                <li><a href="#proof" className="hover:text-white">Case Studies</a></li>
+                <li><a href="#faq" className="hover:text-white">FAQ</a></li>
               </ul>
             </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-              <h5 className="text-xs uppercase tracking-[0.22em] text-emerald-200/80">Top plans</h5>
-              <ul className="mt-4 space-y-3 text-sm">
-                <li>Swaraj Tech Pack — <span className="text-emerald-300">Save 91%</span></li>
-                <li>Prarambh Kick-Start — <span className="text-emerald-300">Save 66%</span></li>
-                <li>Raftar Booster — <span className="text-emerald-300">Save 71%</span></li>
-                <li>Digital Dominance — <span className="text-emerald-300">Save 36%</span></li>
-                <li><a className="hover:text-white transition" href="#plan-table">View full catalog →</a></li>
+            <div>
+              <h3 className="font-semibold uppercase tracking-wider text-white/80">Contact</h3>
+              <ul className="mt-4 space-y-2">
+                <li><a href="https://wa.me/+917388833006" target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a></li>
+                <li><a href="tel:+917388833006" className="hover:text-white">Phone Call</a></li>
+                <li><a href="mailto:sudarshansain6@gmail.com" className="hover:text-white">Email</a></li>
               </ul>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 sm:col-span-2 lg:col-span-1">
-              <h5 className="text-xs uppercase tracking-[0.22em] text-emerald-200/80">Stay connected</h5>
-              <p className="mt-4 text-sm text-white/70">
-                hello@sudarshan.ai • DPIIT: DIPP216267
-              </p>
-              <div className="mt-4 flex flex-wrap gap-4 text-sm">
-                <a
-                  className="hover:text-white transition"
-                  href="https://www.instagram.com/sudarshanailabs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Instagram
-                </a>
-                <a
-                  className="hover:text-white transition"
-                  href="https://www.linkedin.com/company/sudarshan-ai-labs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LinkedIn
-                </a>
-                <a
-                  className="hover:text-white transition"
-                  href="https://www.youtube.com/@sudarshanailabs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  YouTube
-                </a>
-              </div>
             </div>
           </div>
         </div>
-
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Sudarshan AI Labs Pvt. Ltd. All rights reserved.</p>
-          <div className="flex flex-wrap gap-4">
-            <a className="hover:text-white transition" href="#faq">Support FAQ</a>
-            <a className="hover:text-white transition" href="#plans">Compare Plans</a>
-            <a className="hover:text-white transition" href="#cta">Schedule a demo</a>
-          </div>
+        <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs">
+          <p>&copy; {new Date().getFullYear()} Sudarshan AI Labs (NAVA-NETRA NEURAL SUDARSHAN LABS (OPC) PRIVATE LIMITED). All Rights Reserved.</p>
         </div>
       </div>
     </footer>
   );
 }
 
+// --- Detail Page View ---
+function DetailPageView({ detailId }) {
+  const detail = detailPages.find(p => p.id === detailId);
 
-// --- Re-usable Components ---
+  if (!detail) {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold">Detail Page Not Found</h2>
+        <a href="#hero" className="mt-4 inline-block text-emerald-300 hover:text-emerald-200">
+          &larr; Back to Home
+        </a>
+      </div>
+    );
+  }
 
-function PricingCard({ plan }) {
-  const spotlightPathMap = {
-    "swaraj-tech-pack": "/services/TechSwarajPack",
-    "prarambh-pack": "/services/KickStartPack",
-    "raftar-booster": "/services/TezRaftarBooster",
-    "digital-dominance": "/services/DigitalDominatorPack"
-  };
-
-  const fmt = new Intl.NumberFormat("en-IN");
-  const hasNumbers = typeof plan.mrp === "number" && typeof plan.price === "number";
-  const save = hasNumbers ? Math.round(((plan.mrp - plan.price) / plan.mrp) * 100) : null;
-  const hasBadge = Boolean(plan.badge);
   return (
     <motion.div
-      variants={floatIn}
-      whileHover={{ y: -8, transition: { type: "spring", stiffness: 300 } }}
-      className={`relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.1] via-white/[0.04] to-transparent p-6 ${hasBadge ? "pt-14" : ""} text-center shadow-[0_30px_90px_-50px_rgba(59,130,246,0.6)] transition-colors duration-300 hover:border-[#34d399]/60 sm:text-left`}
+      key={detailId}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="space-y-12"
     >
-      {plan.badge && (
-        <span className="absolute left-4 top-4 inline-flex max-w-[75%] items-center gap-2 rounded-full bg-gradient-to-r from-[#f97316] to-[#ec4899] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-black shadow-[0_8px_22px_rgba(236,72,153,0.35)]">
-          {plan.badge}
+      <div className="text-center">
+        <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/80">
+          <Sparkles className="h-3 w-3" />
+          {detail.eyebrow}
         </span>
-      )}
-      <motion.div
-        className="pointer-events-none absolute inset-0 opacity-0"
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{ background: "linear-gradient(160deg, rgba(0,241,160,0.15), transparent 65%)" }}
-      />
-      <div className={`relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between ${hasBadge ? "pt-1" : ""}`}>
-        <div className="w-full space-y-2 text-center sm:text-left">
-          <p className="text-xs uppercase tracking-[0.18em] text-white/50">{plan.category}</p>
-          <h3 className="text-xl font-semibold text-white">{plan.label}</h3>
-          <p className="text-xs text-white/60">{plan.nickname}</p>
-        </div>
-        {save !== null && save > 0 && (
-          <div className="inline-flex items-center justify-center self-center rounded-full bg-gradient-to-r from-[#34d399] to-[#3b82f6] px-3 py-1 text-xs font-semibold text-black shadow-[0_0_18px_rgba(59,130,246,0.35)] sm:self-start">
-            Save {save}%
-          </div>
-        )}
+        <h1 className="mt-4 text-4xl font-semibold text-white md:text-5xl">{detail.title}</h1>
+        <p className="mt-4 max-w-2xl mx-auto text-lg text-white/70">{detail.summary}</p>
+        <a href={detail.liveSection} className="mt-4 inline-block text-emerald-300 hover:text-emerald-200 text-sm">
+          See live section on main page &rarr;
+        </a>
       </div>
-      <div className="mt-4 flex-grow flex flex-col relative space-y-4">
-        {hasNumbers ? (
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-baseline sm:gap-3">
-            <div className="text-2xl font-bold text-white">₹{fmt.format(plan.price)}</div>
-            <div className="text-xs text-white/50 line-through">₹{fmt.format(plan.mrp)}</div>
-          </div>
-        ) : (
-          <div className="text-sm font-semibold text-emerald-300">Custom pricing on request</div>
-        )}
-        <p className="text-sm text-white/70 leading-relaxed">{plan.blurb}</p>
-        {Array.isArray(plan.inclusions) && (
-          <ul className="space-y-2 text-xs text-white/65">
-            {plan.inclusions.map((item) => (
-              <li key={item} className="flex items-start gap-2 justify-center sm:justify-start">
-                <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[#22d3ee] to-[#9333ea]" />
-                <span>{item}</span>
-              </li>
-            ))}
+
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4 rounded-2xl border border-white/10 bg-[#050814]/70 p-6">
+          <h3 className="text-lg font-semibold text-emerald-300">Key Steps</h3>
+          <ul className="space-y-2 text-sm text-white/80">
+            {detail.steps.map(step => <li key={step} className="flex items-start gap-3"><Check className="h-4 w-4 mt-1 flex-shrink-0 text-emerald-300" />{step}</li>)}
           </ul>
-        )}
-        <div className="mt-auto pt-4 flex flex-col sm:flex-row gap-3">
-          <a
-            href="https://wa.me/+917388833006"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-grow inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#34d399] via-[#3b82f6] to-[#9333ea] py-2.5 text-xs font-semibold text-white shadow-[0_0_30px_rgba(59,130,246,0.35)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(59,130,246,0.55)]"
-          >
-            Book on WhatsApp
-            <ArrowRight className="h-4 w-4" />
-          </a>
-          {spotlightPathMap[plan.id] && (
-            <a
-              href={spotlightPathMap[plan.id]}
-              className="inline-flex items-center justify-center gap-1 rounded-full border border-white/20 bg-white/5 py-2.5 px-4 text-xs font-semibold text-white/80 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300"
-            >
-              Details
-            </a>
-          )}
+        </div>
+        <div className="space-y-4 rounded-2xl border border-white/10 bg-[#050814]/70 p-6">
+          <h3 className="text-lg font-semibold text-emerald-300">Deliverables</h3>
+          <ul className="space-y-2 text-sm text-white/80">
+            {detail.deliverables.map(item => <li key={item} className="flex items-start gap-3"><Rocket className="h-4 w-4 mt-1 flex-shrink-0 text-emerald-300" />{item}</li>)}
+          </ul>
+        </div>
+        <div className="md:col-span-2 lg:col-span-1 space-y-4 rounded-2xl border border-white/10 bg-[#050814]/70 p-6">
+          <h3 className="text-lg font-semibold text-emerald-300">Metrics & Impact</h3>
+          <div className="space-y-3">
+            {detail.metrics.map(metric => (
+              <div key={metric.label}>
+                <p className="text-xs uppercase tracking-widest text-white/60">{metric.label}</p>
+                <p className="text-2xl font-bold text-white">{metric.value}</p>
+                <p className="text-xs text-white/60">{metric.insight}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-center">
+        <h3 className="text-lg font-semibold text-white/80">Related Deep Dives</h3>
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
+          {detail.related.map(relId => {
+            const relDetail = detailPages.find(p => p.id === relId);
+            return relDetail ? (
+              <a key={relId} href={`#details/${relId}`} className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/90 transition-all duration-300 hover:border-white/35 hover:bg-white/10">
+                {relDetail.eyebrow}: {relDetail.title}
+              </a>
+            ) : null;
+          })}
         </div>
       </div>
     </motion.div>
   );
 }
 
-function NeonGridBackdrop() {
-  const cells = Array.from({ length: 10 });
-  const colors = ["#00FFFF", "#00F1A0", "#3b82f6", "#7c3aed", "#06b6d4"];
+// --- Utility & Helper Components ---
 
+function SectionDivider() {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-20 hidden overflow-hidden lg:flex lg:items-center lg:justify-center">
-      <div className="grid w-[108%] max-w-[1024px] grid-cols-5 gap-4 opacity-25">
-        {cells.map((_, i) => (
-          <div
-            key={i}
-            className="relative overflow-hidden rounded-3xl border border-cyan-200/10 bg-black/90"
-            style={{ height: 128 }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `radial-gradient(circle at ${i % 2 === 0 ? "12%" : "82%"} ${i % 3 === 0 ? "22%" : "78%"}, ${colors[i % colors.length]}, transparent 58%)`
-              }}
-            />
-          </div>
-        ))}
-      </div>
-      <motion.div
-        className="absolute h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.2),rgba(15,23,42,0))] blur-3xl"
-        animate={{ opacity: [0.18, 0.34, 0.18] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <div className="relative my-12 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent md:my-16">
+      <span className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0B0F19] text-white/20 flex items-center justify-center">
+        <Sparkles className="h-4 w-4" />
+      </span>
     </div>
   );
 }
 
-function GlowBlobs() {
-  return (
-    <div className="pointer-events-none fixed inset-0 -z-10 hidden overflow-hidden md:block">
-      <motion.div
-        className="absolute -top-40 -left-20 h-80 w-80 rounded-full bg-gradient-to-br from-[#22d3ee]/30 via-[#6366f1]/22 to-transparent blur-3xl"
-        animate={{ opacity: [0.24, 0.38, 0.24] }}
-        transition={{ repeat: Infinity, duration: 11, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute -bottom-40 -right-10 h-96 w-96 rounded-full bg-gradient-to-br from-[#00F1A0]/30 via-[#0061FF]/22 to-transparent blur-3xl"
-        animate={{ opacity: [0.2, 0.34, 0.2] }}
-        transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-      />
-    </div>
-  );
-}
-
-function ScrollMotionAura() {
-  return (
-    <div className="pointer-events-none fixed inset-0 -z-10 hidden overflow-hidden xl:block">
-      <motion.div
-        className="absolute left-[8%] top-[16%] h-56 w-56 rounded-full bg-gradient-to-br from-[#22d3ee]/15 via-[#34d399]/10 to-transparent blur-3xl"
-        animate={{ opacity: [0.12, 0.24, 0.12] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute right-[10%] top-[36%] h-64 w-64 rounded-full bg-gradient-to-br from-[#a855f7]/12 via-[#22d3ee]/10 to-transparent blur-3xl"
-        animate={{ opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 9.5, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </div>
-  );
-}
-
-function SectionLabel({ children }) { 
-  return (
-    <p className="text-xs uppercase tracking-[0.26em] text-emerald-300/80 flex items-center gap-2"> 
-      <span className="h-[1px] w-6 bg-gradient-to-r from-transparent via-emerald-400/70 to-transparent" />
-      {children}
-    </p>
-  ); 
-}
-
-function SectionHeader({ eyebrow, title, subtitle, detailId }) { 
+function SectionHeader({ eyebrow, title, subtitle, detailId }) {
   return (
     <motion.div 
-      className="max-w-2xl space-y-3"
-      initial={{ opacity: 0, y: 20 }}
+      className="max-w-3xl text-center mx-auto"
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {eyebrow && <SectionLabel>{eyebrow}</SectionLabel>}
-      <h2 className="text-[1.9rem] leading-[1.16] text-white sm:text-[3.12rem] md:text-[4.1rem]">{title}</h2>
-      {subtitle && <p className="text-base text-white/75 sm:text-lg md:text-xl">{subtitle}</p>}
+      <SectionLabel>{eyebrow}</SectionLabel>
+      <h2 className="mt-3 text-3xl font-semibold text-white md:text-4xl">{title}</h2>
+      <p className="mt-4 text-base leading-relaxed text-white/70">{subtitle}</p>
       {detailId && (
-        <a
-          href={`#details/${detailId}`}
-          className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-300/20 sm:px-4 sm:text-[11px]"
-        >
-          Open detailed page
-          <ArrowRight className="h-3 w-3" />
+        <a href={`#details/${detailId}`} className="mt-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-300/20">
+          Open detailed page <ArrowRight className="h-3 w-3" />
         </a>
       )}
     </motion.div>
-  ); 
+  );
 }
 
-function SectionDivider() {
-  const shouldReduceMotion = useReducedMotion();
-  const nodePositions = ["10%", "22%", "36%", "50%", "64%", "78%", "90%"];
+function SectionLabel({ children }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/80">
+      <Sparkles className="h-3 w-3" />
+      {children}
+    </span>
+  );
+}
 
+function PlanCategoryCard({ category }) {
   return (
     <motion.div
-      className="mt-12 flex items-center justify-center md:mt-16"
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      variants={floatIn}
+      className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] via-transparent to-black/[0.4] p-6 text-center shadow-[0_22px_60px_-40px_rgba(59,130,246,0.55)]"
     >
-      <div className="group relative w-full max-w-4xl px-2 sm:px-4">
-        <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
-        <motion.div
-          className="section-divider-circuit absolute inset-x-4 top-1/2 h-[2px] -translate-y-1/2 overflow-hidden rounded-full bg-[linear-gradient(90deg,transparent,rgba(34,211,238,0.2),rgba(56,189,248,0.65),rgba(34,211,238,0.2),transparent)] shadow-[0_0_30px_rgba(56,189,248,0.28)] transition-all duration-300 group-hover:shadow-[0_0_38px_rgba(56,189,248,0.5)] sm:inset-x-10"
-          animate={shouldReduceMotion ? { opacity: 0.9 } : { opacity: [0.72, 1, 0.72] }}
-          transition={shouldReduceMotion ? undefined : { duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {!shouldReduceMotion && (
-          <motion.span
-            className="absolute left-1/4 top-1/2 h-14 w-14 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#34d399]/70 via-[#3b82f6]/65 to-[#9333ea]/55 opacity-75 blur-2xl"
-            animate={{ x: ["0%", "148%", "0%"], opacity: [0.55, 0.85, 0.55] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          />
-        )}
-        <div className="absolute inset-x-3 top-1/2 hidden -translate-y-1/2 justify-between px-2 sm:flex">
-          {nodePositions.map((pos, idx) => (
-            <motion.span
-              key={`${pos}-${idx}`}
-              className="absolute h-2 w-2 rounded-full border border-cyan-200/45 bg-cyan-300/70 shadow-[0_0_14px_rgba(34,211,238,0.45)]"
-              style={{ left: pos }}
-              animate={shouldReduceMotion ? { opacity: 0.75 } : { opacity: [0.45, 1, 0.45], scale: [1, 1.16, 1] }}
-              transition={shouldReduceMotion ? undefined : { duration: 2.4 + idx * 0.4, repeat: Infinity, ease: "easeInOut" }}
-            />
-          ))}
-        </div>
-        <motion.span
-          className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-300/50 bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.25),rgba(5,12,30,0.94))] backdrop-blur-md shadow-[0_0_26px_rgba(34,211,238,0.4)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_35px_rgba(34,211,238,0.7)] md:h-16 md:w-16"
-          whileHover={{ scale: 1.08 }}
-          animate={shouldReduceMotion ? { y: 0 } : { y: [0, -2, 0], boxShadow: ["0 0 18px rgba(34,211,238,0.35)", "0 0 34px rgba(34,211,238,0.62)", "0 0 18px rgba(34,211,238,0.35)"] }}
-          transition={shouldReduceMotion ? undefined : { duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <motion.span
-            className="absolute inset-0 rounded-full border border-cyan-300/35"
-            animate={shouldReduceMotion ? { opacity: 0.5 } : { scale: [1, 1.22, 1], opacity: [0.55, 0.1, 0.55] }}
-            transition={shouldReduceMotion ? undefined : { duration: 3, repeat: Infinity, ease: "easeOut" }}
-          />
-          <motion.span
-            className="absolute inset-[10px] rounded-full border border-sky-200/50"
-            animate={shouldReduceMotion ? undefined : { rotate: [0, 360] }}
-            transition={shouldReduceMotion ? undefined : { duration: 11, repeat: Infinity, ease: "linear" }}
-          />
-          <Sparkles className="relative z-10 h-5 w-5 text-cyan-50 md:h-[1.35rem] md:w-[1.35rem]" />
-        </motion.span>
-      </div>
+      <AuroraBlob className="top-[-30%] left-[-20%] h-56 w-56 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.2),rgba(15,23,42,0))]" />
+      <p className="text-xs uppercase tracking-widest text-emerald-200/80">{category.subtitle}</p>
+      <h3 className="mt-3 text-xl font-semibold text-white">{category.label}</h3>
+      <p className="mt-3 text-sm text-white/70">{category.description}</p>
+      <ul className="mt-4 space-y-2 text-xs text-white/60">
+        {category.bullets.map(item => <li key={item} className="flex items-center justify-center gap-2"><Check className="h-4 w-4 flex-shrink-0 text-emerald-300" /> {item}</li>)}
+      </ul>
+      <a href={category.ctaHref} className="mt-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold text-white/80 transition hover:bg-white/20">
+        {category.ctaLabel} <ArrowRight className="h-3 w-3" />
+      </a>
     </motion.div>
   );
 }
 
-function AuroraBlob({ className = "" }) {
+function PricingCard({ plan }) {
   return (
-    <motion.span
-      aria-hidden="true"
-      className={`pointer-events-none absolute rounded-full blur-3xl ${className}`}
-      initial={{ opacity: 0.2, scale: 0.8 }}
-      animate={{ opacity: [0.25, 0.45, 0.25], scale: [0.95, 1.05, 0.95] }}
-      transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-    />
+    <motion.div
+      variants={floatIn}
+      className={`group relative overflow-hidden rounded-3xl border p-6 text-center transition-all duration-300
+        ${plan.badge === "Top seller" ? "border-emerald-300/60 bg-emerald-900/10" : "border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent"}
+      `}
+    >
+      {plan.badge && (
+        <span className="absolute top-0 right-6 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] px-3 py-1 text-xs font-semibold text-black shadow-lg">
+          {plan.badge}
+        </span>
+      )}
+      <p className="text-xs uppercase tracking-widest text-emerald-200/80">{plan.nickname}</p>
+      <h3 className="mt-3 text-xl font-semibold text-white">{plan.label}</h3>
+      <div className="mt-4 flex items-baseline justify-center gap-2">
+        <span className="text-4xl font-bold text-white">₹{plan.price}</span>
+        {plan.mrp && <span className="text-sm text-white/50 line-through">₹{plan.mrp}</span>}
+      </div>
+      <p className="mt-4 text-sm text-white/70">{plan.blurb}</p>
+      <ul className="mt-6 space-y-2 text-xs text-left text-white/60">
+        {plan.inclusions.map(item => (
+          <li key={item} className="flex items-start gap-2">
+            <Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-emerald-300" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <a
+        href="#cta"
+        className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300
+          ${plan.badge === "Top seller" 
+            ? "bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] text-black shadow-lg hover:shadow-emerald-400/50" 
+            : "bg-white/10 text-white/80 hover:bg-white/20"}
+        `}
+      >
+        Get Started <ArrowRight className="h-4 w-4" />
+      </a>
+    </motion.div>
   );
 }
 
-function AboutChip({ title, desc }) { 
+function PlansTable({ plans }) {
+  const [filter, setFilter] = useState("All");
+
+  const filteredPlans = plans.filter(p => filter === "All" || p.category === filter);
+
+  const categories = ["All", ...new Set(plans.map(p => p.category))];
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-2 p-4">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setFilter(cat)}
+            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+              filter === cat 
+                ? "bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] text-black" 
+                : "bg-white/5 text-white/70 hover:bg-white/10"
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[600px] text-sm text-left">
+          <thead className="text-xs uppercase tracking-wider text-white/60">
+            <tr>
+              <th className="px-5 py-3">Plan Name</th>
+              <th className="px-5 py-3">Price (INR)</th>
+              <th className="px-5 py-3">Description</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/10">
+            <AnimatePresence>
+              {filteredPlans.map(plan => (
+                <motion.tr
+                  key={plan.name}
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="hover:bg-white/5"
+                >
+                  <td className="px-5 py-4 font-medium text-white/90">
+                    {plan.name}
+                    <div className="text-xs text-white/50">{plan.category}</div>
+                  </td>
+                  <td className="px-5 py-4">
+                    {plan.price != null ? (
+                      <>
+                        <span className="font-bold text-white">₹{plan.price}</span>
+                        {plan.cadence !== "One-time" && <span className="text-xs text-white/50">/{plan.cadence.replace('Per ','')}</span>}
+                        {plan.mrp && <span className="ml-2 text-xs text-white/40 line-through">₹{plan.mrp}</span>}
+                      </>
+                    ) : <span className="text-white/70">{plan.cadence}</span>}
+                  </td>
+                  <td className="px-5 py-4 text-white/70">{plan.description}</td>
+                </motion.tr>
+              ))}
+            </AnimatePresence>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function AboutChip({ title, desc }) {
   return (
     <motion.div 
-      variants={floatIn} 
-      className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_0_18px_rgba(0,0,0,0.5)]"
+      className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4"
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-emerald-200/90">
-        <span className="flex h-6 w-6 items-center justify-center rounded-xl bg-gradient-to-br from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] text-black shadow-[0_0_18px_rgba(34,197,94,0.8)]">
-          <ShoppingBag className="h-3 w-3" />
-        </span>
-        <span>{title}</span>
-      </div>
-      <p className="mt-3 text-xs text-white/70">{desc}</p>
+      <p className="text-xs uppercase tracking-widest text-emerald-200/80">{title}</p>
+      <p className="mt-2 text-xs text-white/70">{desc}</p>
     </motion.div>
-  ); 
+  );
 }
 
 function KeyStatCard({ value, label }) {
   return (
     <motion.div
       variants={floatIn}
-      className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.12] via-white/[0.05] to-transparent px-4 py-5 text-center shadow-[0_18px_40px_-28px_rgba(59,130,246,0.55)] sm:text-left"
+      className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center"
     >
-      <p className="text-2xl font-semibold text-white">{value}</p>
-      <p className="mt-2 text-xs text-white/65">{label}</p>
+      <p className="text-2xl font-bold text-white">{value}</p>
+      <p className="mt-1 text-xs text-white/60">{label}</p>
     </motion.div>
   );
 }
 
-function CampaignCard({ tag, title, metric, desc }) { 
+function CampaignCard({ tag, title, metric, desc }) {
   return (
     <motion.div 
       variants={floatIn} 
-      className="rounded-3xl border border-white/10 bg-[#050814]/80 p-5 shadow-[0_0_20px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-emerald-300/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.7)] hover:-translate-y-2"
+      className="relative group overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-5 transition-all duration-300 hover:border-emerald-300/50 hover:bg-emerald-900/20"
     >
-      <p className="text-[11px] uppercase tracking-[0.19em] text-emerald-200/90">{tag}</p>
-      <h3 className="mt-2 text-lg font-semibold text-white">{title}</h3>
-      <p className="mt-1 text-sm text-emerald-300">{metric}</p>
-      <p className="mt-3 text-xs text-white/70">{desc}</p>
+      <div className="absolute top-0 left-0 h-48 w-48 bg-gradient-to-br from-emerald-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div className="relative">
+        <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">{tag}</span>
+        <h3 className="mt-4 text-xl font-semibold text-white">{title}</h3>
+        <p className="mt-2 text-3xl font-bold bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-transparent">{metric}</p>
+        <p className="mt-2 text-sm text-white/70">{desc}</p>
+      </div>
     </motion.div>
-  ); 
+  );
 }
 
-function TestimonialCard({ name, area, quote }) { 
+function TestimonialCard({ name, area, quote }) {
   return (
     <motion.div 
       variants={floatIn} 
-      className="rounded-3xl border border-white/10 bg-[#050814]/80 p-5 shadow-[0_0_20px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-[#00FFFF]/60 hover:shadow-[0_0_30px_rgba(6,182,212,0.7)] hover:-translate-y-2"
+      className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-6"
     >
-      <p className="text-lg font-light text-white/90">“{quote}”</p>
-      <div className="mt-4 flex items-center justify-between text-[11px] text-white/60">
+      <p className="text-lg text-white/90">"{quote}"</p>
+      <div className="mt-4 flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-sky-400 text-white font-bold">{name.charAt(0)}</div>
         <div>
-          <p className="font-semibold text-white/80">{name}</p>
-          <p className="text-white/50">{area}</p>
+          <p className="font-semibold text-white">{name}</p>
+          <p className="text-sm text-white/60">{area}</p>
         </div>
-        <Star className="h-5 w-5 text-amber-300" fill="currentColor" />
-      </div>
-    </motion.div>
-  ); 
-}
-
-// New Component
-function BlogCard({ post }) {
-  return (
-    <motion.div 
-      variants={floatIn} 
-      className="group rounded-3xl border border-white/10 bg-[#050814]/80 shadow-[0_0_20px_rgba(0,0,0,0.6)] transition-all duration-300 hover:border-white/30 hover:-translate-y-2 overflow-hidden"
-    >
-      <div className="overflow-hidden">
-        <img 
-          src={post.img} 
-          alt={post.title} 
-          className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105" 
-          onError={(e) => { e.target.src = 'https://placehold.co/600x400/0B0F19/FFFFFF?text=Image'; }}
-        />
-      </div>
-      <div className="p-5">
-        <p className="text-[11px] uppercase tracking-[0.19em] text-emerald-200/90">{post.category}</p>
-        <h3 className="mt-2 text-lg font-semibold text-white h-12">{post.title}</h3>
-        <p className="mt-2 text-sm text-white/70 h-16">{post.desc}</p>
-        <a
-          href={post.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-300 transition-all group-hover:gap-3"
-        >
-          Read More <ArrowRight className="h-4 w-4" />
-        </a>
       </div>
     </motion.div>
   );
@@ -3022,211 +2464,135 @@ function BlogCard({ post }) {
 
 function FeaturedBlogCard({ post }) {
   return (
-    <motion.div
+    <motion.a 
+      href={post.href}
+      target="_blank"
+      rel="noopener noreferrer"
       variants={floatIn}
-      className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#312e81] via-[#1e1b4b] to-[#0f172a] p-1 md:col-span-7"
+      className="group relative md:col-span-12 lg:col-span-6 block overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:border-cyan-300/50"
     >
-      <div className="relative h-full rounded-[30px] bg-black/30 p-5 sm:p-8">
-        <AuroraBlob className="top-[-25%] left-[-15%] h-64 w-64 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),rgba(15,23,42,0))]" />
-        <AuroraBlob className="bottom-[-30%] right-[-20%] h-72 w-72 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.25),rgba(15,23,42,0))]" />
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white/80">
-          {post.category}
-        </span>
-        <h3 className="mt-5 text-2xl font-semibold text-white sm:mt-6 sm:text-3xl">{post.title}</h3>
-        <p className="mt-3 text-sm text-white/80 sm:mt-4 sm:text-base">{post.desc}</p>
-        <a
-          href={post.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-200 transition hover:text-white"
-        >
-          Read full playbook
-          <ArrowRight className="h-4 w-4" />
-        </a>
+      <img src={post.img} alt={post.title} className="absolute inset-0 h-full w-full object-cover opacity-20 transition-opacity duration-300 group-hover:opacity-30" />
+      <div className="relative h-full flex flex-col justify-end p-6 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+        <span className="text-xs uppercase tracking-widest text-cyan-200/80">{post.category}</span>
+        <h3 className="mt-2 text-2xl font-semibold text-white">{post.title}</h3>
+        <p className="mt-2 text-sm text-white/70">{post.desc}</p>
+        <span className="mt-4 text-xs font-semibold text-cyan-200 flex items-center gap-2">Read More <ArrowRight className="h-3 w-3" /></span>
       </div>
-    </motion.div>
+    </motion.a>
   );
 }
 
 function MiniBlogCard({ post, index }) {
-  const columnSpan = index % 2 === 0 ? "md:col-span-5" : "md:col-span-5";
   return (
-    <motion.div
+    <motion.a 
+      href={post.href}
+      target="_blank"
+      rel="noopener noreferrer"
       variants={floatIn}
-      className={`relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/[0.08] via-transparent to-black/[0.45] p-6 shadow-[0_24px_70px_-40px_rgba(59,130,246,0.55)] ${columnSpan}`}
+      className="group relative md:col-span-6 lg:col-span-3 block overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:border-cyan-300/50"
     >
-      <AuroraBlob className="top-[-20%] right-[-10%] h-40 w-40 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.22),rgba(15,23,42,0))]" />
-      <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-200/80">{post.category}</p>
-      <h4 className="mt-3 text-xl font-semibold text-white">{post.title}</h4>
-      <p className="mt-3 text-sm text-white/70">{post.desc}</p>
-      <a
-        href={post.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-sky-200 transition hover:text-white"
-      >
-        Read more
-        <ArrowRight className="h-4 w-4" />
-      </a>
-    </motion.div>
-  );
-}
-
-function FaqSection() {
-  const [openIndex, setOpenIndex] = useState(0);
-  return (
-    <section id="faq" className="mt-20 md:mt-32">
-      <SectionHeader 
-        eyebrow="Ask us anything" 
-        title="FAQ for founders, shop owners & marketers" 
-        subtitle="Short answers so you can get back to selling." 
-        detailId="faq"
-      />
-      <div className="mt-8 space-y-3">
-        {faqItems.map((item, index) => (
-          <FaqItem 
-            key={item.question} 
-            item={item} 
-            isOpen={openIndex === index} 
-            onToggle={() => setOpenIndex((prev) => prev === index ? null : index)} 
-          />
-        ))}
+      <img src={post.img} alt={post.title} className="absolute inset-0 h-full w-full object-cover opacity-10 transition-opacity duration-300 group-hover:opacity-20" />
+      <div className="relative p-5 bg-gradient-to-b from-black/50 via-black/20 to-transparent">
+        <span className="text-[10px] uppercase tracking-widest text-cyan-200/80">{post.category}</span>
+        <h4 className="mt-2 font-semibold text-white">{post.title}</h4>
       </div>
-    </section>
+    </motion.a>
   );
 }
 
-function FaqItem({ item, isOpen, onToggle }) {
-  return (
-    <motion.div 
-      layout 
-      className={`rounded-3xl border p-1 transition-colors duration-300 ${isOpen ? 'border-emerald-300/60 bg-white/10' : 'border-white/10 bg-[#050814]/70 hover:border-white/30'}`}
-    >
-      <button 
-        type="button" 
-        onClick={onToggle} 
-        className="flex w-full items-center justify-between gap-3 rounded-[22px] bg-black/40 px-4 py-3 text-left sm:rounded-[26px] sm:px-6 sm:py-4"
-      >
-        <span className="text-xs font-medium text-white/90 sm:text-sm">{item.question}</span>
-        <motion.span 
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-          className="rounded-full border border-white/10 bg-white/10 p-2 text-white/70"
-        >
-          <ChevronDown className="h-4 w-4" />
-        </motion.span>
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="faq-answer"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="overflow-hidden px-4 sm:px-6"
-          >
-            <div className="pb-4 text-xs text-white/70 sm:pb-5 sm:text-sm">
-              {item.answer}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
+
+function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+  return <motion.div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] origin-[0%] z-50" style={{ scaleX }} />;
 }
 
-function FloatingCTA() {
-  const [isOpen, setIsOpen] = useState(false);
-
+function NeonGridBackdrop() {
   return (
-    <div className="fixed bottom-4 right-3 z-40 flex flex-col items-end gap-3 sm:bottom-6 sm:right-4">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="cta-card"
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-[220px] rounded-3xl border border-white/10 bg-[#050814]/95 p-3 text-left shadow-[0_0_25px_rgba(0,0,0,0.6)] backdrop-blur sm:w-[260px] sm:p-4"
-          >
-            <p className="text-[10px] uppercase tracking-[0.24em] text-emerald-200/80">Talk to a human</p>
-            <p className="mt-2 text-xs text-white/70 sm:text-sm">Get a callback or send a WhatsApp note. Our Lucknow pod replies in under 10 minutes.</p>
-            <div className="mt-4 flex flex-col gap-2">
-              <a
-                href="https://wa.me/+917388833006"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00F1A0] to-[#00FFFF] px-3 py-2 text-xs font-semibold text-black shadow-[0_0_18px_rgba(0,241,160,0.7)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,241,160,0.9)] sm:px-4 sm:text-sm"
-              >
-                <MessageCircle className="h-4 w-4" />
-                WhatsApp team
-              </a>
-              <a
-                href="https://agent.jotform.com/019aa7fd4aaa7cccb0ce1b2c0748666c3478"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-300/10 px-3 py-2 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/70 hover:bg-cyan-300/20 sm:px-4 sm:text-sm"
-              >
-                2nd contact agent
-              </a>
-              <a
-                href="tel:+919559595959"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-white/30 hover:text-white sm:px-4 sm:text-sm"
-              >
-                <Phone className="h-4 w-4" />
-                Request a call
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <motion.button
-        type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7B2FF7] px-3 py-2 text-xs font-semibold text-black shadow-[0_0_25px_rgba(0,241,160,0.8)] focus:outline-none focus:ring-2 focus:ring-emerald-300/60 sm:gap-3 sm:px-4 sm:text-sm"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.96 }}
-        animate={{ boxShadow: ["0 0 18px rgba(0,241,160,0.45)", "0 0 32px rgba(0,241,160,0.78)", "0 0 18px rgba(0,241,160,0.45)"] }}
-        transition={{ duration: 3.8, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
-      >
-        <Bot className="h-4 w-4" />
-        {isOpen ? "Hide assistant" : "Need quick help?"}
-      </motion.button>
+    <div className="fixed inset-0 z-0 pointer-events-none">
+      <div 
+        className="absolute inset-0 bg-repeat"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(0, 241, 160, 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 241, 160, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+          maskImage: 'radial-gradient(ellipse 100% 60% at 50% 0%, black 20%, transparent 80%)'
+        }}
+      />
     </div>
   );
 }
 
-function ScrollProgressBar() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
-
+function GlowBlobs() {
   return (
-    <motion.div 
-      className="fixed left-0 top-0 z-50 h-1 w-full origin-left bg-gradient-to-r from-[#00F1A0] via-[#00FFFF] to-[#7F00FF] shadow-[0_0_20px_rgba(0,241,160,0.4)]"
-      style={{ scaleX }}
+    <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+      <motion.div 
+        className="absolute top-[10%] left-[10%] h-96 w-96 bg-cyan-500/10 rounded-full blur-3xl"
+        animate={{
+          x: [0, 100, 0],
+          y: [0, 50, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          repeatType: "mirror"
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-[15%] right-[5%] h-80 w-80 bg-purple-500/10 rounded-full blur-3xl"
+        animate={{
+          x: [0, -80, 0],
+          y: [0, -60, 0],
+          scale: [1, 0.9, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          repeatType: "mirror",
+          delay: 5
+        }}
+      />
+    </div>
+  );
+}
+
+function AuroraBlob({ className }) {
+  return (
+    <motion.div
+      className={`pointer-events-none absolute blur-3xl ${className}`}
+      initial={{ opacity: 0.5, scale: 1 }}
+      animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
+      transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
     />
   );
 }
 
-function StatPill({ label, value, tone }) { 
-  const colorMap={
-    emerald: "from-emerald-400/80 to-emerald-300/40",
-    rose: "from-rose-400/80 to-rose-300/40",
-    sky: "from-sky-400/80 to-sky-300/40"
-  }; 
+function ScrollMotionAura() {
+  const { scrollY } = useScroll();
+  const [y, setY] = useState(0);
+
+  useEffect(() => {
+    return scrollY.onChange(latest => {
+      setY(latest);
+    });
+  }, [scrollY]);
+
   return (
-    <motion.div 
-      className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-white/70"
-      // Add subtle pulse animation with random delay
-      animate={{ scale: [1, 1.05, 1] }}
-      transition={{ repeat: Infinity, duration: 2.5, delay: Math.random() * 2 }}
-    >
-      <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">{label}</p>
-      <p className={`mt-1 inline-flex items-center rounded-full bg-gradient-to-r ${colorMap[tone]} px-2 py-0.5 text-xs font-semibold text-black shadow-[0_0_15px_rgba(0,0,0,0.7)]`}>
-        {value}
-      </p>
-    </motion.div>
-  ); 
+    <motion.div
+      className="fixed top-0 left-0 h-96 w-96 bg-gradient-to-br from-emerald-400/20 to-transparent rounded-full blur-3xl pointer-events-none"
+      style={{
+        y: y * 0.1,
+        x: y * 0.05,
+        opacity: Math.max(0, 1 - (y / 1000)),
+      }}
+    />
+  );
 }
+export default HomePage;

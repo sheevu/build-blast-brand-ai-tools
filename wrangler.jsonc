@@ -1,12 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "build-blast-brand-ai-tools",
+  "account_id": "c81fd03f0cfe7a64de55b1c74e91205f",
   "compatibility_date": "2025-09-27",
-  "pages_build_output_dir": "dist",
   "observability": {
     "enabled": true
   },
   "assets": {
+    "directory": "./dist",
     "not_found_handling": "single-page-application"
   },
   "compatibility_flags": [
