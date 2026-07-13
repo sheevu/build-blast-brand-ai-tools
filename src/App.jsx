@@ -6,6 +6,11 @@ import {
   MessageCircle, Phone, ChevronDown, BarChart3
 } from "lucide-react";
 import { Routes, Route } from 'react-router-dom';
+import AmbientBackground from './components/AmbientBackground.jsx';
+import KineticTitle from './components/KineticTitle.jsx';
+import MagnetButton from './components/MagnetButton.jsx';
+import FigmaCanvas from './components/FigmaCanvas.jsx';
+import ScrollTransitions from './components/ScrollTransitions.jsx';
 
 const OnlinePresenceAnalyzer = React.lazy(() => import('./components/OnlinePresenceAnalyzer.jsx'));
 
@@ -906,34 +911,46 @@ export default function App() {
         <Route path="/" element={
           <div className="min-h-screen overflow-x-clip bg-[#0B0F19] text-white font-sans antialiased">
             <ScrollProgressBar />
-            {showAmbientLayers && !shouldReduceMotion && <NeonGridBackdrop />}
-            {showAmbientLayers && !shouldReduceMotion && <GlowBlobs />}
-            {showAmbientLayers && !shouldReduceMotion && <ScrollMotionAura />}
+            {showAmbientLayers && <AmbientBackground />}
             <Header isDetailView={isDetailView} />
-            <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 md:px-6 md:pt-16 overflow-x-hidden">
+            <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 md:px-6 md:pt-16 overflow-x-hidden relative z-10">
               {isDetailView ? (
                 <DetailPageView detailId={activeDetailId} />
               ) : (
                 <>
                   <Hero />
                   <SectionDivider />
-                  <ValuePropsSection />
+                  <ScrollTransitions>
+                    <ValuePropsSection />
+                  </ScrollTransitions>
+                  <SectionDivider />
+                  <FigmaCanvas />
                   {showDeferredSections && (
                     <div className="deferred-sections">
                       <SectionDivider />
-                      <HowItWorksSection />
+                      <ScrollTransitions>
+                        <HowItWorksSection />
+                      </ScrollTransitions>
                       <SectionDivider />
-                      <PlatformPillarsSection />
+                      <ScrollTransitions>
+                        <PlatformPillarsSection />
+                      </ScrollTransitions>
                       <SectionDivider />
                       <RevenueStrip />
                       <SectionDivider />
-                      <WhySudarshan />
+                      <ScrollTransitions>
+                        <WhySudarshan />
+                      </ScrollTransitions>
                       <SectionDivider />
-                      <PlansSection />
+                      <ScrollTransitions>
+                        <PlansSection />
+                      </ScrollTransitions>
                       <SectionDivider />
                       <SectorsSection />
                       <SectionDivider />
-                      <ProofSection />
+                      <ScrollTransitions>
+                        <ProofSection />
+                      </ScrollTransitions>
                       <SectionDivider />
                       <Campaigns />
                       <SectionDivider />
@@ -941,7 +958,9 @@ export default function App() {
                       <SectionDivider />
                       <BlogSection />
                       <SectionDivider />
-                      <FaqSection />
+                      <ScrollTransitions>
+                        <FaqSection />
+                      </ScrollTransitions>
                       <CTA />
                       <SectionDivider />
                       {/* --- AI Tool Section relocated just above footer --- */}
@@ -1098,12 +1117,12 @@ function Hero() {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(120deg,rgba(12,26,53,0.96),rgba(9,14,35,0.96),rgba(3,8,20,0.98))] px-4 py-10 sm:rounded-[36px] sm:px-6 sm:py-14 md:px-12 md:py-20"
+      className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(120deg,rgba(12,26,53,0.85),rgba(9,14,35,0.85),rgba(3,8,20,0.9))] px-4 py-10 sm:rounded-[36px] sm:px-6 sm:py-14 md:px-12 md:py-20 z-10"
     >
-      <div className="pointer-events-none absolute -left-12 -top-10 h-56 w-56 rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.28),rgba(15,23,42,0))] blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-16 -right-12 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.32),rgba(8,47,73,0))] blur-3xl" />
-      <div className="pointer-events-none absolute left-1/3 top-1/2 h-[420px] w-[2px] -translate-y-1/2 rounded-full bg-gradient-to-b from-transparent via-[#fbbf24]/60 to-transparent blur-[2px]" />
-      <div className="pointer-events-none absolute -right-10 top-6 h-40 w-40 rounded-full bg-gradient-to-br from-[#00F1A0]/30 to-transparent blur-3xl" />
+      <div className="pointer-events-none absolute -left-12 -top-10 h-56 w-56 rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.2),rgba(15,23,42,0))] blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 -right-12 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.22),rgba(8,47,73,0))] blur-3xl" />
+      <div className="pointer-events-none absolute left-1/3 top-1/2 h-[420px] w-[2px] -translate-y-1/2 rounded-full bg-gradient-to-b from-transparent via-[#fbbf24]/30 to-transparent blur-[2px]" />
+      <div className="pointer-events-none absolute -right-10 top-6 h-40 w-40 rounded-full bg-gradient-to-br from-[#00F1A0]/20 to-transparent blur-3xl" />
 
       <div className="relative grid gap-12 lg:grid-cols-[1.18fr_0.82fr] lg:items-center">
         {/* Hero Text Content */}
@@ -1121,17 +1140,12 @@ function Hero() {
             <span>AI launchpad • Lucknow & Bharat MSMEs</span>
           </motion.div>
 
-          <motion.h1
-            variants={floatIn}
-            className="mx-auto max-w-2xl text-[2rem] font-semibold leading-[1.12] text-white sm:text-5xl lg:mx-0 lg:text-[3.4rem]"
-          >
-            Launch Your Digital Dukaan in{" "}
-            <span
-              className="block bg-gradient-to-r from-[#22d3ee] via-[#818cf8] to-[#f97316] bg-clip-text text-transparent"
-            >
-              30 Minutes With Agentic AI
-            </span>
-          </motion.h1>
+          <div className="flex justify-center lg:justify-start">
+            <KineticTitle
+              text="Launch Your Digital Dukaan in 30 Minutes With Agentic AI"
+              className="mx-auto max-w-2xl text-[2rem] font-semibold leading-[1.12] text-white sm:text-5xl lg:mx-0 lg:text-[3.4rem]"
+            />
+          </div>
 
           <motion.p
             variants={floatIn}
@@ -1142,32 +1156,27 @@ function Hero() {
             hiring an agency.
           </motion.p>
 
-          {/* Action Buttons */}
+          {/* Action Buttons wrapped in MagnetButton */}
           <motion.div
             variants={floatIn}
             className="flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center lg:justify-start"
           >
-            <a
-              href="#plans"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#34d399] via-[#3b82f6] to-[#9333ea] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_40px_rgba(59,130,246,0.45)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_55px_rgba(59,130,246,0.65)] sm:w-auto"
-            >
-              Explore ₹89 Launchpad
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
-              href="#process"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/90 transition-all duration-300 hover:border-white/35 hover:bg-white/10 sm:w-auto"
-            >
-              See 30-min Workflow
-            </a>
-            <a
-              href="https://agent.jotform.com/019aa7fd4aaa7cccb0ce1b2c0748666c3478"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-5 py-2.5 text-sm font-medium text-cyan-100 transition-all duration-300 hover:border-cyan-200/60 hover:bg-cyan-300/20 sm:w-auto"
-            >
-              Contact Agent (2nd Line)
-            </a>
+            <MagnetButton href="#plans" className="w-full sm:w-auto">
+              <span className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#34d399] via-[#3b82f6] to-[#9333ea] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_40px_rgba(59,130,246,0.45)]">
+                Explore ₹89 Launchpad
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </MagnetButton>
+            <MagnetButton href="#process" className="w-full sm:w-auto">
+              <span className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/90">
+                See 30-min Workflow
+              </span>
+            </MagnetButton>
+            <MagnetButton href="https://agent.jotform.com/019aa7fd4aaa7cccb0ce1b2c0748666c3478" className="w-full sm:w-auto">
+              <span className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-5 py-2.5 text-sm font-medium text-cyan-100">
+                Contact Agent (2nd Line)
+              </span>
+            </MagnetButton>
           </motion.div>
         </motion.div>
 
