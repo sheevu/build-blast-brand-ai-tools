@@ -22,7 +22,17 @@ const ServiceLayout = ({
   useEffect(() => {
     // Page Title
     const cleanTitle = title.replace(/[🌱🚀🏪📱💎📈⚡]/g, '').trim();
-    document.title = `${cleanTitle} @ ${price} | Sudarshan AI Labs Lucknow`;
+    document.title = `${cleanTitle} @ ${price} | vyapai.in Lucknow`;
+
+    // Canonical Link
+    const path = window.location.pathname;
+    let canonicalTag = document.querySelector('link[rel="canonical"]');
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link');
+      canonicalTag.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalTag);
+    }
+    canonicalTag.setAttribute('href', `https://vyapai.in${path}`);
 
     // Meta Description
     let metaDescriptionTag = document.querySelector('meta[name="description"]');
@@ -31,7 +41,7 @@ const ServiceLayout = ({
       metaDescriptionTag.setAttribute('name', 'description');
       document.head.appendChild(metaDescriptionTag);
     }
-    metaDescriptionTag.setAttribute('content', seoDescription || `${cleanTitle} service by Sudarshan AI Labs Lucknow. Premium digital marketing & technology solutions for Indian MSMEs starting at only ${price}.`);
+    metaDescriptionTag.setAttribute('content', seoDescription || `${cleanTitle} service by vyapai.in (Sudarshan AI Labs Lucknow). Premium digital marketing & technology solutions for Indian MSMEs starting at ${price}.`);
 
     // Meta Keywords
     let metaKeywordsTag = document.querySelector('meta[name="keywords"]');
@@ -40,11 +50,87 @@ const ServiceLayout = ({
       metaKeywordsTag.setAttribute('name', 'keywords');
       document.head.appendChild(metaKeywordsTag);
     }
-    metaKeywordsTag.setAttribute('content', seoKeywords || `${cleanTitle}, Sudarshan AI Labs, digital marketing Lucknow, MSME growth, website setup, WhatsApp bot, local SEO`);
+    metaKeywordsTag.setAttribute('content', seoKeywords || `${cleanTitle}, vyapai.in, Sudarshan AI Labs, digital marketing Lucknow, MSME growth, website setup, WhatsApp bot, local SEO`);
+
+    // Inject Service & Breadcrumb JSON-LD Schemas
+    const numPrice = parseInt(price.replace(/[^0-9]/g, ''), 10) || 0;
+    
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "@id": `https://vyapai.in${path}#service`,
+          "name": cleanTitle,
+          "description": seoDescription || description,
+          "category": category,
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": "vyapai.in - Sudarshan AI Labs Pvt. Ltd.",
+            "url": "https://vyapai.in",
+            "telephone": "+91-7388833006",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Lucknow",
+              "addressRegion": "Uttar Pradesh",
+              "addressCountry": "IN"
+            }
+          },
+          "areaServed": {
+            "@type": "AdministrativeArea",
+            "name": "Lucknow, Uttar Pradesh, India"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": numPrice,
+            "priceCurrency": "INR",
+            "url": `https://vyapai.in${path}`,
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `https://vyapai.in${path}#breadcrumb`,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://vyapai.in/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": category || "Services",
+              "item": "https://vyapai.in/#plans"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": cleanTitle,
+              "item": `https://vyapai.in${path}`
+            }
+          ]
+        }
+      ]
+    };
+
+    let scriptTag = document.getElementById('service-jsonld');
+    if (!scriptTag) {
+      scriptTag = document.createElement('script');
+      scriptTag.id = 'service-jsonld';
+      scriptTag.type = 'application/ld+json';
+      document.head.appendChild(scriptTag);
+    }
+    scriptTag.textContent = JSON.stringify(schemaData);
 
     // Scroll to top on page load
     window.scrollTo(0, 0);
-  }, [title, price, seoDescription, seoKeywords]);
+
+    return () => {
+      if (scriptTag) scriptTag.remove();
+    };
+  }, [title, price, seoDescription, seoKeywords, description, category]);
 
   // Format WhatsApp message link
   const cleanTitleForWa = title.replace(/[🌱🚀🏪📱💎📈⚡]/g, '').trim();

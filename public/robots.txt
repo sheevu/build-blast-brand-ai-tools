@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sudarshan.ai/sitemap.xml
+Sitemap: https://vyapai.in/sitemap.xml

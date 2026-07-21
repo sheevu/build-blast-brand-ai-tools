@@ -34,6 +34,7 @@ const AIChatbotAssistant = React.lazy(() => import('./pages/services/AIChatbotAs
 const ExcelSheetsAutomation = React.lazy(() => import('./pages/services/ExcelSheetsAutomation.jsx'));
 const SaaSDevelopment = React.lazy(() => import('./pages/services/SaaSDevelopment.jsx'));
 const BusinessGrowthConsultation = React.lazy(() => import('./pages/services/BusinessGrowthConsultation.jsx'));
+const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));
 
 
 // --- Animation Variants ---
@@ -995,6 +996,7 @@ export default function App() {
         <Route path="/services/ExcelSheetsAutomation" element={<ExcelSheetsAutomation />} />
         <Route path="/services/SaaSDevelopment" element={<SaaSDevelopment />} />
         <Route path="/services/BusinessGrowthConsultation" element={<BusinessGrowthConsultation />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
