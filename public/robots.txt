@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sudarshan.ai/sitemap.xml
+# Sitemap - Fixed: was sudarshan.ai, now correctly pointing to vyapai.in
+Sitemap: https://vyapai.in/sitemap.xml
+
+# Disallow admin/API paths to save crawl budget
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /assets/*.map
