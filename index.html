@@ -20,8 +20,10 @@
     <meta name="theme-color" content="#020617" />
     <meta name="format-detection" content="telephone=no" />
 
+    <!-- CANONICAL: Points to vyapai.in -->
     <link rel="canonical" href="https://vyapai.in/" />
 
+    <!-- Open Graph Tags: Fixed to vyapai.in domain -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="vyapai.in" />
     <meta property="og:title" content="vyapai.in | AI Growth Engine for MSMEs in Lucknow" />
@@ -31,7 +33,9 @@
     />
     <meta property="og:url" content="https://vyapai.in/" />
     <meta property="og:image" content="https://vyapai.in/favicon.svg" />
+    <meta property="og:image:alt" content="vyapai.in - AI Growth Engine for MSMEs" />
 
+    <!-- Twitter Card Tags: Fixed to vyapai.in domain -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="vyapai.in | AI Growth Engine for MSMEs in Lucknow" />
     <meta
@@ -40,6 +44,7 @@
     />
     <meta name="twitter:image" content="https://vyapai.in/favicon.svg" />
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -73,16 +78,33 @@
             "priceRange": "₹89 - ₹4500",
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": "Indira nagar, Lucknow",
+              "streetAddress": "Indira Nagar",
+              "addressLocality": "Lucknow",
               "addressRegion": "Uttar Pradesh",
               "postalCode": "226016",
               "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 26.8717,
+              "longitude": 80.9918
             },
             "sameAs": [
               "https://www.instagram.com/sudarshanailabs",
               "https://www.linkedin.com/company/sudarshan-ai-labs",
               "https://www.youtube.com/@sudarshanailabs"
             ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://vyapai.in/#website",
+            "name": "vyapai.in",
+            "url": "https://vyapai.in/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://vyapai.in/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
           },
           {
             "@type": "OfferCatalog",

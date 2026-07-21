@@ -1,0 +1,5 @@
+# WWW to non-WWW permanent redirect (Priority 5 fix)
+https://www.vyapai.in/* https://vyapai.in/:splat 301!
+
+# Fallback: Serve index.html for all SPA routes (React Router handles 404 in-app)
+/* /index.html 200
