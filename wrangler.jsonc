@@ -8,8 +8,21 @@
   },
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
+    // Priority 4: Return proper 404 for unknown paths instead of serving SPA shell
+    // This prevents Soft 404 errors in Google Search Console
+    "not_found_handling": "404-page",
+    // Priority 7: Aggressive caching for static assets to improve Core Web Vitals
+    "serve_directly": true
   },
+  // Cache Rules: immutable cache for hashed assets, short cache for HTML
+  "rules": [
+    {
+      // Hashed JS/CSS/image assets - cache for 1 year (immutable)
+      "type": "Text",
+      "globs": ["**/*.js", "**/*.css", "**/*.woff2", "**/*.woff", "**/*.ttf"],
+      "fallthrough": false
+    }
+  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]
