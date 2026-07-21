@@ -1,4 +1,58 @@
+# robots.txt for vyapai.in (Sudarshan AI Labs)
+# Optimized for Google Search Console, Canonical Tag Crawling & Indexing
+
 User-agent: *
 Allow: /
 
+# Search Engines & Discovery Bots - Explicitly Allowed
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# AI Data Scrapers & Heavy Training Bots - Restricted
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+# XML Sitemap Location
 Sitemap: https://vyapai.in/sitemap.xml
