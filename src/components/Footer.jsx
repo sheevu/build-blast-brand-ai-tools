@@ -13,6 +13,7 @@ const Footer = () => {
         <div className="mt-6 flex flex-wrap justify-center gap-6 text-xs font-medium text-slate-400">
           <a href="/#plans" className="hover:text-emerald-700 transition">Pricing Plans</a>
           <a href="/#value" className="hover:text-emerald-700 transition">Why Choose Us</a>
+          <a href="/faq" className="hover:text-emerald-700 transition font-semibold text-emerald-800">Lucknow Marketing FAQ</a>
           <a href="https://wa.me/917388833006" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-700 transition">Direct WhatsApp Support</a>
           <a href="/#proof" className="hover:text-emerald-700 transition">Client Case Studies</a>
         </div>

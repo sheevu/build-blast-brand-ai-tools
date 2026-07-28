@@ -22,35 +22,45 @@ const ServiceLayout = ({
   useEffect(() => {
     // Page Title
     const cleanTitle = title.replace(/[🌱🚀🏪📱💎📈⚡]/g, '').trim();
-    document.title = `${cleanTitle} @ ${price} | vyapai.in Lucknow`;
+    const fullTitle = `${cleanTitle} @ ${price} | vyapai.in Lucknow`;
+    const fullDesc = seoDescription || `${cleanTitle} service by vyapai.in (Sudarshan AI Labs Lucknow). Premium digital marketing & technology solutions for Indian MSMEs starting at ${price}.`;
+    const fullKeywords = seoKeywords || `${cleanTitle}, vyapai.in, Sudarshan AI Labs, digital marketing Lucknow, MSME growth, website setup, WhatsApp bot, local SEO`;
+    const pageUrl = `https://vyapai.in${window.location.pathname}`;
+
+    document.title = fullTitle;
 
     // Canonical Link
-    const path = window.location.pathname;
     let canonicalTag = document.querySelector('link[rel="canonical"]');
     if (!canonicalTag) {
       canonicalTag = document.createElement('link');
       canonicalTag.setAttribute('rel', 'canonical');
       document.head.appendChild(canonicalTag);
     }
-    canonicalTag.setAttribute('href', `https://vyapai.in${path}`);
+    canonicalTag.setAttribute('href', pageUrl);
 
-    // Meta Description
-    let metaDescriptionTag = document.querySelector('meta[name="description"]');
-    if (!metaDescriptionTag) {
-      metaDescriptionTag = document.createElement('meta');
-      metaDescriptionTag.setAttribute('name', 'description');
-      document.head.appendChild(metaDescriptionTag);
-    }
-    metaDescriptionTag.setAttribute('content', seoDescription || `${cleanTitle} service by vyapai.in (Sudarshan AI Labs Lucknow). Premium digital marketing & technology solutions for Indian MSMEs starting at ${price}.`);
+    // Helper to set or create meta tag
+    const setMetaTag = (selector, nameAttr, attrValue, content) => {
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute(nameAttr, attrValue);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', content);
+    };
 
-    // Meta Keywords
-    let metaKeywordsTag = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywordsTag) {
-      metaKeywordsTag = document.createElement('meta');
-      metaKeywordsTag.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywordsTag);
-    }
-    metaKeywordsTag.setAttribute('content', seoKeywords || `${cleanTitle}, vyapai.in, Sudarshan AI Labs, digital marketing Lucknow, MSME growth, website setup, WhatsApp bot, local SEO`);
+    // Meta Description & Keywords
+    setMetaTag('meta[name="description"]', 'name', 'description', fullDesc);
+    setMetaTag('meta[name="keywords"]', 'name', 'keywords', fullKeywords);
+
+    // Open Graph Tags
+    setMetaTag('meta[property="og:title"]', 'property', 'og:title', fullTitle);
+    setMetaTag('meta[property="og:description"]', 'property', 'og:description', fullDesc);
+    setMetaTag('meta[property="og:url"]', 'property', 'og:url', pageUrl);
+
+    // Twitter Card Tags
+    setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', fullTitle);
+    setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', fullDesc);
 
     // Inject Service & Breadcrumb JSON-LD Schemas
     const numPrice = parseInt(price.replace(/[^0-9]/g, ''), 10) || 0;
