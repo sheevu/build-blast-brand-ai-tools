@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import { Check, Clock, ShieldCheck, MessageCircle, AlertCircle, Sparkles, HelpCircle, ArrowLeft } from 'lucide-react';
+import { Check, Clock, ShieldCheck, MessageCircle, AlertCircle, Sparkles, HelpCircle, ArrowLeft, ArrowRight } from 'lucide-react';
+import { formatPrice, getRelatedServices, getServiceByPath } from '../data/serviceCatalog';
 
 const ServiceLayout = ({
   title = '',
@@ -17,6 +19,9 @@ const ServiceLayout = ({
   category = 'Growth Service',
   placeholderName = 'Service Visual Dashboard'
 }) => {
+  const pagePath = window.location.pathname;
+  const currentService = getServiceByPath(pagePath);
+  const relatedServices = getRelatedServices(currentService);
 
   // Handle SEO updates dynamically on mount/update
   useEffect(() => {
@@ -70,7 +75,7 @@ const ServiceLayout = ({
       "@graph": [
         {
           "@type": "Service",
-          "@id": `https://vyapai.in${path}#service`,
+          "@id": `https://vyapai.in${pagePath}#service`,
           "name": cleanTitle,
           "description": seoDescription || description,
           "category": category,
@@ -94,13 +99,13 @@ const ServiceLayout = ({
             "@type": "Offer",
             "price": numPrice,
             "priceCurrency": "INR",
-            "url": `https://vyapai.in${path}`,
+            "url": `https://vyapai.in${pagePath}`,
             "availability": "https://schema.org/InStock"
           }
         },
         {
           "@type": "BreadcrumbList",
-          "@id": `https://vyapai.in${path}#breadcrumb`,
+          "@id": `https://vyapai.in${pagePath}#breadcrumb`,
           "itemListElement": [
             {
               "@type": "ListItem",
@@ -118,7 +123,7 @@ const ServiceLayout = ({
               "@type": "ListItem",
               "position": 3,
               "name": cleanTitle,
-              "item": `https://vyapai.in${path}`
+              "item": `https://vyapai.in${pagePath}`
             }
           ]
         }
@@ -140,11 +145,12 @@ const ServiceLayout = ({
     return () => {
       if (scriptTag) scriptTag.remove();
     };
-  }, [title, price, seoDescription, seoKeywords, description, category]);
+  }, [title, price, seoDescription, seoKeywords, description, category, pagePath]);
 
   // Format WhatsApp message link
   const cleanTitleForWa = title.replace(/[🌱🚀🏪📱💎📈⚡]/g, '').trim();
-  const waText = encodeURIComponent(`Hi Sudarshan AI Labs, I want to get started with "${cleanTitleForWa}" priced at ${price}. Please guide me on next steps.`);
+  const itemReference = currentService ? ` Item code: ${currentService.id}.` : '';
+  const waText = encodeURIComponent(`Hi Sudarshan AI Labs, I want to get started with "${cleanTitleForWa}" priced at ${price}.${itemReference} Page: https://vyapai.in${pagePath}`);
   const waLink = `https://wa.me/917388833006?text=${waText}`;
 
   // Calculate savings percent if possible
@@ -163,13 +169,15 @@ const ServiceLayout = ({
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}
-        <div className="mb-6 flex items-center text-xs sm:text-sm text-slate-505 font-medium">
-          <a href="/" className="hover:text-emerald-700 transition flex items-center gap-1">
+        <div className="mb-6 flex items-center text-xs sm:text-sm text-slate-500 font-medium">
+          <Link to="/" className="hover:text-emerald-700 transition flex items-center gap-1">
             <ArrowLeft className="h-3 w-3" /> Dashboard
-          </a>
-          <span className="mx-2 text-slate-350">/</span>
+          </Link>
+          <span className="mx-2 text-slate-300">/</span>
+          <Link to="/services" className="hover:text-emerald-700">Services</Link>
+          <span className="mx-2 text-slate-300">/</span>
           <span className="text-slate-400">{category}</span>
-          <span className="mx-2 text-slate-350">/</span>
+          <span className="mx-2 text-slate-300">/</span>
           <span className="text-emerald-800 font-semibold truncate">{cleanTitleForWa}</span>
         </div>
 
@@ -193,19 +201,33 @@ const ServiceLayout = ({
           {/* Left Column - Details, Inclusions, Visuals, FAQs */}
           <div className="space-y-10 lg:col-span-8">
             
-            {/* Visual Placeholder Section */}
-            <div className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#EBF5EB]/50 via-white to-[#E4F2E6]/40 p-1">
-              <div className="flex h-56 sm:h-72 w-full flex-col items-center justify-center rounded-[22px] border border-dashed border-emerald-300 bg-white/70 p-6 text-center shadow-inner">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 shadow-sm mb-4">
-                  <Sparkles className="h-7 w-7" />
+            {/* Reusable service journey visual */}
+            <div className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#071426] via-[#10243c] to-[#22133c] p-6 text-white shadow-xl sm:p-8">
+              <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-cyan-400/20 blur-3xl" />
+              <div className="absolute -bottom-16 left-1/3 h-48 w-48 rounded-full bg-violet-500/20 blur-3xl" />
+              <div className="relative">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[.22em] text-cyan-200">How this service moves your business forward</p>
+                    <h2 className="mt-2 text-lg font-bold sm:text-xl">{placeholderName}</h2>
+                  </div>
+                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/10 text-2xl shadow-[0_0_25px_rgba(34,211,238,.18)]">{currentService?.icon || <Sparkles className="h-7 w-7" />}</span>
                 </div>
-                <p className="text-sm font-semibold tracking-wider uppercase text-emerald-800">{placeholderName}</p>
-                <p className="mt-2 max-w-sm text-xs text-slate-500">
-                  Interactive visual setup, product mockups, and execution blueprints will be integrated here in Phase 2.
-                </p>
-                <span className="mt-4 inline-flex items-center rounded-full bg-emerald-100/60 px-2.5 py-0.5 text-xs font-medium text-emerald-800">
-                  Image Placeholder
-                </span>
+                <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">01 · Choose</span>
+                    <p className="mt-2 text-sm font-semibold">Confirm your business goal and required details.</p>
+                  </div>
+                  <div className="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-200">02 · Build</span>
+                    <p className="mt-2 text-sm font-semibold">Our Lucknow team completes and checks your setup.</p>
+                  </div>
+                  <div className="rounded-2xl border border-emerald-300/20 bg-emerald-300/10 p-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-200">03 · Grow</span>
+                    <p className="mt-2 text-sm font-semibold">Launch, measure enquiries and take the next best step.</p>
+                  </div>
+                </div>
+                {currentService?.goals?.length > 0 && <div className="mt-5 flex flex-wrap gap-2">{currentService.goals.map((goal) => <span key={goal} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-slate-200">{goal}</span>)}</div>}
               </div>
             </div>
 
@@ -311,6 +333,23 @@ const ServiceLayout = ({
                 </div>
               </div>
             </div>
+
+            {relatedServices.length > 0 && (
+              <section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="related-services-title">
+                <p className="text-xs font-bold uppercase tracking-[.2em] text-emerald-700">Your next best steps</p>
+                <h2 id="related-services-title" className="mt-2 text-xl font-bold text-slate-950 sm:text-2xl">Related services for this goal</h2>
+                <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                  {relatedServices.map((service) => (
+                    <Link key={service.id} to={`/services/${service.slug}`} className="group rounded-2xl border border-slate-100 bg-slate-50/50 p-4 transition hover:-translate-y-1 hover:border-emerald-200 hover:bg-emerald-50/40">
+                      <span className="text-2xl">{service.icon}</span>
+                      <h3 className="mt-3 text-sm font-bold text-slate-900">{service.name}</h3>
+                      <p className="mt-2 text-xs leading-5 text-slate-500">{service.description}</p>
+                      <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-emerald-700">From {formatPrice(service.price)} <ArrowRight className="h-3.5 w-3.5" /></span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
 
           </div>
 

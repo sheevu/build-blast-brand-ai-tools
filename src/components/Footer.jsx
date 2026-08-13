@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Footer = () => {
   return (
@@ -11,6 +10,7 @@ const Footer = () => {
         
         {/* Quick Links / Disclaimers */}
         <div className="mt-6 flex flex-wrap justify-center gap-6 text-xs font-medium text-slate-400">
+          <a href="/services" className="hover:text-emerald-700 transition font-semibold text-emerald-800">All Services</a>
           <a href="/#plans" className="hover:text-emerald-700 transition">Pricing Plans</a>
           <a href="/#value" className="hover:text-emerald-700 transition">Why Choose Us</a>
           <a href="/faq" className="hover:text-emerald-700 transition font-semibold text-emerald-800">Lucknow Marketing FAQ</a>

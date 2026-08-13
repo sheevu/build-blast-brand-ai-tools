@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from "framer-motion";
 import { 
   Sparkles, Rocket, Bot, ShoppingBag, Star, 
-  Check, X, ArrowRight, Menu, XIcon, 
+  Check, ArrowRight, Menu, XIcon,
   MessageCircle, Phone, ChevronDown, BarChart3
 } from "lucide-react";
 import { Routes, Route } from 'react-router-dom';
@@ -11,6 +11,7 @@ import KineticTitle from './components/KineticTitle.jsx';
 import MagnetButton from './components/MagnetButton.jsx';
 import FigmaCanvas from './components/FigmaCanvas.jsx';
 import ScrollTransitions from './components/ScrollTransitions.jsx';
+import { serviceCatalog } from './data/serviceCatalog.js';
 
 const OnlinePresenceAnalyzer = React.lazy(() => import('./components/OnlinePresenceAnalyzer.jsx'));
 
@@ -34,8 +35,31 @@ const AIChatbotAssistant = React.lazy(() => import('./pages/services/AIChatbotAs
 const ExcelSheetsAutomation = React.lazy(() => import('./pages/services/ExcelSheetsAutomation.jsx'));
 const SaaSDevelopment = React.lazy(() => import('./pages/services/SaaSDevelopment.jsx'));
 const BusinessGrowthConsultation = React.lazy(() => import('./pages/services/BusinessGrowthConsultation.jsx'));
+const ServicesPage = React.lazy(() => import('./pages/ServicesPage.jsx'));
 const FaqPage = React.lazy(() => import('./pages/FaqPage.jsx'));
 const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));
+
+const serviceComponents = {
+  TechSwarajPack,
+  KickStartPack,
+  VyapariUdaanPack,
+  SocialBoosterPack,
+  DigitalDominatorPack,
+  GrowthProPack,
+  TezRaftarBooster,
+  BioLinkGMB,
+  CustomBusinessWebsite,
+  LandingPage,
+  SocialMediaMarketing,
+  SEOContentBoost,
+  WhatsAppBusinessBot,
+  ResearchArticleWriting,
+  ResumeWriting,
+  AIChatbotAssistant,
+  ExcelSheetsAutomation,
+  SaaSDevelopment,
+  BusinessGrowthConsultation,
+};
 
 
 // --- Animation Variants ---
@@ -978,25 +1002,14 @@ export default function App() {
             <Footer />
           </div>
         } />
-        <Route path="/services/TechSwarajPack" element={<TechSwarajPack />} />
-        <Route path="/services/KickStartPack" element={<KickStartPack />} />
-        <Route path="/services/VyapariUdaanPack" element={<VyapariUdaanPack />} />
-        <Route path="/services/SocialBoosterPack" element={<SocialBoosterPack />} />
-        <Route path="/services/DigitalDominatorPack" element={<DigitalDominatorPack />} />
-        <Route path="/services/GrowthProPack" element={<GrowthProPack />} />
-        <Route path="/services/TezRaftarBooster" element={<TezRaftarBooster />} />
-        <Route path="/services/BioLinkGMB" element={<BioLinkGMB />} />
-        <Route path="/services/CustomBusinessWebsite" element={<CustomBusinessWebsite />} />
-        <Route path="/services/LandingPage" element={<LandingPage />} />
-        <Route path="/services/SocialMediaMarketing" element={<SocialMediaMarketing />} />
-        <Route path="/services/SEOContentBoost" element={<SEOContentBoost />} />
-        <Route path="/services/WhatsAppBusinessBot" element={<WhatsAppBusinessBot />} />
-        <Route path="/services/ResearchArticleWriting" element={<ResearchArticleWriting />} />
-        <Route path="/services/ResumeWriting" element={<ResumeWriting />} />
-        <Route path="/services/AIChatbotAssistant" element={<AIChatbotAssistant />} />
-        <Route path="/services/ExcelSheetsAutomation" element={<ExcelSheetsAutomation />} />
-        <Route path="/services/SaaSDevelopment" element={<SaaSDevelopment />} />
-        <Route path="/services/BusinessGrowthConsultation" element={<BusinessGrowthConsultation />} />
+        <Route path="/services" element={<ServicesPage />} />
+        {serviceCatalog.flatMap((service) => {
+          const ServiceComponent = serviceComponents[service.component];
+          return [
+            <Route key={service.slug} path={`/services/${service.slug}`} element={<ServiceComponent />} />,
+            <Route key={service.legacyPath} path={`/services/${service.legacyPath}`} element={<ServiceComponent />} />,
+          ];
+        })}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/digital-marketing-lucknow-faq" element={<FaqPage />} />
         <Route path="*" element={<NotFound />} />

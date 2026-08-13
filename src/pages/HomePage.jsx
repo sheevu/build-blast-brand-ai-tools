@@ -1,9 +1,9 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from "framer-motion";
 import { 
-  Sparkles, Rocket, Bot, ShoppingBag, Star, 
-  Check, X, ArrowRight, Menu, XIcon, 
-  MessageCircle, Phone, ChevronDown, BarChart3
+  Sparkles, Rocket, Bot,
+  Check, ArrowRight, Menu, XIcon,
+  MessageCircle, ChevronDown, BarChart3
 } from "lucide-react";
 import OnlinePresenceAnalyzer from '../components/OnlinePresenceAnalyzer';
 
@@ -2482,7 +2482,7 @@ function FeaturedBlogCard({ post }) {
   );
 }
 
-function MiniBlogCard({ post, index }) {
+function MiniBlogCard({ post, index: _index }) {
   return (
     <motion.a 
       href={post.href}
