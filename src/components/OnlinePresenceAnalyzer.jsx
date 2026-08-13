@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Loader, Clipboard, Search } from 'lucide-react';
+import { Loader, Clipboard, Search } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // --- Helper Functions ---

@@ -1,4 +1,3 @@
-import React from 'react';
 import ServiceLayout from '../../components/ServiceLayout';
 
 const WhatsAppBusinessBot = () => {

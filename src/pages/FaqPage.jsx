@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { 
   HelpCircle, Search, ChevronDown, ChevronUp, Sparkles, 
-  MapPin, ShieldCheck, DollarSign, Rocket, Bot, ArrowRight, Phone, MessageCircle 
+  MapPin, ShieldCheck, DollarSign, Rocket, Bot, MessageCircle
 } from 'lucide-react';
 
 const faqCategories = [

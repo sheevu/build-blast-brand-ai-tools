@@ -1,5 +1,26 @@
 # WWW to non-WWW permanent redirect (Priority 5 fix)
 https://www.vyapai.in/* https://vyapai.in/:splat 301!
 
+# Legacy service URLs to readable SEO URLs
+/services/TechSwarajPack /services/tech-swaraj-pack-89 301
+/services/KickStartPack /services/prarambh-kick-start-pack-499 301
+/services/VyapariUdaanPack /services/udaan-vyapari-pack-889 301
+/services/SocialBoosterPack /services/social-booster-pack-999 301
+/services/DigitalDominatorPack /services/digital-dominator-pack-1399 301
+/services/GrowthProPack /services/vikas-growth-pro-pack-1599 301
+/services/TezRaftarBooster /services/raftar-booster-pack-1899 301
+/services/BioLinkGMB /services/bio-link-google-business-profile 301
+/services/CustomBusinessWebsite /services/custom-business-website 301
+/services/LandingPage /services/lead-generation-landing-page 301
+/services/SocialMediaMarketing /services/social-media-marketing-lucknow 301
+/services/SEOContentBoost /services/seo-content-boost-lucknow 301
+/services/WhatsAppBusinessBot /services/whatsapp-business-bot 301
+/services/ResearchArticleWriting /services/research-article-writing 301
+/services/ResumeWriting /services/ats-resume-writing 301
+/services/AIChatbotAssistant /services/ai-chatbot-virtual-assistant 301
+/services/ExcelSheetsAutomation /services/excel-google-sheets-automation 301
+/services/SaaSDevelopment /services/saas-ai-mvp-development 301
+/services/BusinessGrowthConsultation /services/business-growth-consultation 301
+
 # Fallback: Serve index.html for all SPA routes (React Router handles 404 in-app)
 /* /index.html 200

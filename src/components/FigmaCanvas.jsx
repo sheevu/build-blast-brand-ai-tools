@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Sparkles, Move, Eye, Layers, Settings, Maximize2 } from 'lucide-react';
 
@@ -7,7 +7,7 @@ export default function FigmaCanvas() {
   const shouldReduceMotion = useReducedMotion();
 
   // Layer list representing MSME components
-  const [layers, setLayers] = useState([
+  const [layers] = useState([
     {
       id: 'layer-1',
       name: 'Directory_Card',
