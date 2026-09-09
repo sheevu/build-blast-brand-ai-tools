@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "lottie-web": "^5.13.0",
+    "motion": "^13.2.0",
+    "playwright": "^1.63.0",
+    "three": "^0.186.0"
+  }
+}
