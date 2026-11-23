@@ -1,12 +1,74 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 /**
  * AboutPage - /about route
  * Fix for Search Console: 'Discovered - currently not indexed'
  * Google found https://vyapai.in/about via external links but it had no route.
- * This page provides real indexable content for /about.
+ * This page provides indexable company information at its canonical URL.
  */
 export default function AboutPage() {
+  useEffect(() => {
+    const pageUrl = 'https://vyapai.in/about-sudarshan-ai-labs';
+    const pageTitle = 'About Sudarshan AI Labs | AI and Digital Growth for Indian MSMEs';
+    const description = 'Learn about Sudarshan AI Labs, a Lucknow-based company building practical AI, digital marketing, and automation services for Indian MSMEs.';
+    document.title = pageTitle;
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = pageUrl;
+    const setMeta = (selector, attrs, content) => {
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        Object.entries(attrs).forEach(([key, value]) => tag.setAttribute(key, value));
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    };
+    setMeta('meta[name="description"]', { name: 'description' }, description);
+    setMeta('meta[property="og:title"]', { property: 'og:title' }, pageTitle);
+    setMeta('meta[property="og:description"]', { property: 'og:description' }, description);
+    setMeta('meta[property="og:url"]', { property: 'og:url' }, pageUrl);
+    const schema = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'AboutPage',
+          '@id': `${pageUrl}#webpage`,
+          url: pageUrl,
+          name: pageTitle,
+          description,
+          inLanguage: 'en-IN',
+          isPartOf: { '@id': 'https://vyapai.in/#website' },
+          about: { '@id': 'https://vyapai.in/#organization' },
+          mainEntity: { '@id': 'https://vyapai.in/#organization' },
+          breadcrumb: { '@id': `${pageUrl}#breadcrumb` }
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${pageUrl}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vyapai.in/' },
+            { '@type': 'ListItem', position: 2, name: 'About Sudarshan AI Labs', item: pageUrl }
+          ]
+        }
+      ]
+    };
+    let script = document.getElementById('about-jsonld');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'about-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+    return () => script.remove();
+  }, []);
+
   return (
     <div style={{ minHeight: '100vh', background: '#020617', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
       {/* Canonical meta is set dynamically - this page is https://vyapai.in/about */}
@@ -16,8 +78,8 @@ export default function AboutPage() {
         <Link to="/" style={{ color: '#6366f1', fontWeight: 700, fontSize: '1.25rem', textDecoration: 'none' }}>Vyapai</Link>
         <div style={{ display: 'flex', gap: '1.5rem' }}>
           <Link to="/" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem' }}>Home</Link>
-          <Link to="/services/KickStartPack" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem' }}>Services</Link>
-          <Link to="/about" style={{ color: '#6366f1', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600 }}>About</Link>
+          <Link to="/services/prarambh-kick-start-pack-499" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem' }}>Services</Link>
+          <Link to="/about-sudarshan-ai-labs" style={{ color: '#6366f1', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600 }}>About</Link>
         </div>
       </nav>
 
@@ -67,7 +129,7 @@ export default function AboutPage() {
         {/* CTA */}
         <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <Link
-            to="/services/KickStartPack"
+            to="/services/prarambh-kick-start-pack-499"
             style={{ background: '#6366f1', color: '#fff', padding: '0.875rem 1.75rem', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 600 }}
           >
             View Our Services
@@ -85,11 +147,11 @@ export default function AboutPage() {
       <footer style={{ borderTop: '1px solid #1e293b', padding: '2rem', textAlign: 'center', color: '#475569', fontSize: '0.85rem' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
           <Link to="/" style={{ color: '#6366f1', textDecoration: 'none' }}>Home</Link>
-          <Link to="/about" style={{ color: '#6366f1', textDecoration: 'none' }}>About</Link>
-          <Link to="/services/KickStartPack" style={{ color: '#6366f1', textDecoration: 'none' }}>KickStart Pack</Link>
-          <Link to="/services/WhatsAppBusinessBot" style={{ color: '#6366f1', textDecoration: 'none' }}>WhatsApp Bot</Link>
-          <Link to="/services/SEOContentBoost" style={{ color: '#6366f1', textDecoration: 'none' }}>SEO Boost</Link>
-          <Link to="/services/SaaSDevelopment" style={{ color: '#6366f1', textDecoration: 'none' }}>SaaS Dev</Link>
+          <Link to="/about-sudarshan-ai-labs" style={{ color: '#6366f1', textDecoration: 'none' }}>About</Link>
+          <Link to="/services/prarambh-kick-start-pack-499" style={{ color: '#6366f1', textDecoration: 'none' }}>KickStart Pack</Link>
+          <Link to="/services/whatsapp-business-bot" style={{ color: '#6366f1', textDecoration: 'none' }}>WhatsApp Bot</Link>
+          <Link to="/services/seo-content-boost-lucknow" style={{ color: '#6366f1', textDecoration: 'none' }}>SEO Boost</Link>
+          <Link to="/services/saas-ai-mvp-development" style={{ color: '#6366f1', textDecoration: 'none' }}>SaaS Dev</Link>
         </div>
         <p>© 2026 Sudarshan AI Labs Pvt. Ltd. | Lucknow, UP, India</p>
       </footer>

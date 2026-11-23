@@ -8,15 +8,74 @@ const ServicesPage = () => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    document.title = 'Affordable Digital Services in Lucknow | Sudarshan AI Labs';
-    const description = 'Compare 19 affordable website, Google, WhatsApp, social media and AI services for Lucknow MSMEs, starting at ₹89.';
-    let meta = document.querySelector('meta[name="description"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
+    const pageUrl = 'https://vyapai.in/services';
+    const pageTitle = 'Digital Marketing, SEO & AI Services in Lucknow | Sudarshan AI Labs';
+    const description = 'Compare 19 website, Google, WhatsApp, social media and AI services for Lucknow MSMEs, with transparent INR pricing from ₹89.';
+    document.title = pageTitle;
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
     }
-    meta.content = description;
+    canonical.href = pageUrl;
+    const setMeta = (selector, attrs, content) => {
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        Object.entries(attrs).forEach(([key, value]) => tag.setAttribute(key, value));
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    };
+    setMeta('meta[name="description"]', { name: 'description' }, description);
+    setMeta('meta[property="og:title"]', { property: 'og:title' }, pageTitle);
+    setMeta('meta[property="og:description"]', { property: 'og:description' }, description);
+    setMeta('meta[property="og:url"]', { property: 'og:url' }, pageUrl);
+    const schema = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': `${pageUrl}#webpage`,
+          url: pageUrl,
+          name: pageTitle,
+          description,
+          inLanguage: 'en-IN',
+          isPartOf: { '@id': 'https://vyapai.in/#website' },
+          about: { '@id': 'https://vyapai.in/#organization' },
+          mainEntity: { '@id': `${pageUrl}#service-list` },
+          breadcrumb: { '@id': `${pageUrl}#breadcrumb` }
+        },
+        {
+          '@type': 'ItemList',
+          '@id': `${pageUrl}#service-list`,
+          itemListElement: serviceCatalog.map((service, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: `${pageUrl}/${service.slug}`,
+            name: service.name
+          }))
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${pageUrl}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vyapai.in/' },
+            { '@type': 'ListItem', position: 2, name: 'Services', item: pageUrl }
+          ]
+        }
+      ]
+    };
+    let script = document.getElementById('services-jsonld');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'services-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+    return () => script.remove();
   }, []);
 
   const visibleServices = useMemo(() => {

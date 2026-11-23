@@ -226,6 +226,18 @@ export default function FaqPage() {
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebPage",
+          "@id": "https://vyapai.in/faq#webpage",
+          "url": pageUrl,
+          "name": pageTitle,
+          "description": pageDesc,
+          "inLanguage": "en-IN",
+          "isPartOf": { "@id": "https://vyapai.in/#website" },
+          "about": { "@id": "https://vyapai.in/#organization" },
+          "mainEntity": { "@id": "https://vyapai.in/faq#faqpage" },
+          "breadcrumb": { "@id": "https://vyapai.in/faq#breadcrumb" }
+        },
+        {
           "@type": "FAQPage",
           "@id": "https://vyapai.in/faq#faqpage",
           "url": pageUrl,

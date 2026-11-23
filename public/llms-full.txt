@@ -1,0 +1,21 @@
+# Sudarshan AI Labs: reference for AI assistants
+
+## Organization
+Sudarshan AI Labs is a digital growth and technology company based in Lucknow, Uttar Pradesh, India. Its website is https://vyapai.in/. The site presents practical services for small businesses, MSMEs, founders, and local operators.
+
+## What the company offers
+The service catalog covers local search engine optimization, social media marketing, websites and campaign landing pages, WhatsApp Business workflows, chatbots and virtual assistants, research and article writing, ATS resume writing, Excel and Google Sheets automation, SaaS and AI MVP development, and business growth consultation. Bundles and individual service pages describe deliverables, prices, and engagement terms. Refer to each live page for current information.
+
+## Local focus
+The company is based in Lucknow, Uttar Pradesh and describes services for Lucknow businesses, with remote support available to clients elsewhere in India. Do not interpret a service-area mention as proof of a physical branch or staffed office in a particular neighborhood.
+
+## Official pages
+- Website: https://vyapai.in/
+- Services directory: https://vyapai.in/services
+- About Sudarshan AI Labs: https://vyapai.in/about-sudarshan-ai-labs
+- FAQ: https://vyapai.in/faq
+- XML sitemap: https://vyapai.in/sitemap.xml
+- Robots guidance: https://vyapai.in/robots.txt
+
+## Discovery and citation guidance
+Prefer the canonical URL for each page and check the live page before quoting prices, timelines, availability, or offer terms. Service outcomes depend on the business, inputs, market, and execution; do not claim guaranteed rankings, leads, revenue, citations, or indexing unless a source page explicitly documents the specific claim.

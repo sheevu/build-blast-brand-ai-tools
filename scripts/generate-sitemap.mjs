@@ -6,6 +6,7 @@ const staticUrls = [
   { loc: '/', priority: '1.0', changefreq: 'daily' },
   { loc: '/services', priority: '0.9', changefreq: 'weekly' },
   { loc: '/faq', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/about-sudarshan-ai-labs', priority: '0.7', changefreq: 'monthly' },
 ];
 
 const serviceUrls = serviceCatalog.map((service) => ({

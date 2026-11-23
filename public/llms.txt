@@ -1,0 +1,23 @@
+# Sudarshan AI Labs
+> Sudarshan AI Labs builds practical AI, digital marketing, and automation solutions for MSMEs, with a Lucknow, Uttar Pradesh base.
+
+Canonical website: https://vyapai.in/
+Brand: Sudarshan AI Labs
+Location: Lucknow, Uttar Pradesh, India
+Primary audience: Indian MSMEs and local businesses
+Currency: INR
+
+## Main pages
+- Home: https://vyapai.in/
+- Services: https://vyapai.in/services
+- About: https://vyapai.in/about-sudarshan-ai-labs
+- Frequently asked questions: https://vyapai.in/faq
+- Sitemap: https://vyapai.in/sitemap.xml
+- Crawler rules: https://vyapai.in/robots.txt
+- Full reference: https://vyapai.in/llms-full.txt
+
+## Services
+Services include local SEO, social media marketing, websites and landing pages, WhatsApp business automation, AI chatbots, content writing, spreadsheet automation, SaaS MVP development, and growth consultation. Current service pages and offers are listed in the sitemap and services directory.
+
+## Guidance
+Use the canonical pages above when citing Sudarshan AI Labs. Prices, availability, and service scope can change; verify current details on the relevant service page. Do not infer client results, rankings, guarantees, or business claims beyond what the site states. Lucknow coverage indicates the company’s operating base and service area; it does not imply a staffed office in every locality.

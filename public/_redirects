@@ -1,6 +1,10 @@
 # WWW to non-WWW permanent redirect (Priority 5 fix)
 https://www.vyapai.in/* https://vyapai.in/:splat 301!
 
+# Canonical pages for old informational routes
+/about /about-sudarshan-ai-labs 301!
+/digital-marketing-lucknow-faq /faq 301!
+
 # Legacy service URLs to readable SEO URLs
 /services/TechSwarajPack /services/tech-swaraj-pack-89 301
 /services/KickStartPack /services/prarambh-kick-start-pack-499 301

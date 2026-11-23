@@ -25,111 +25,78 @@ const ServiceLayout = ({
 
   // Handle SEO updates dynamically on mount/update
   useEffect(() => {
-    // Page Title
     const cleanTitle = title.replace(/[🌱🚀🏪📱💎📈⚡]/g, '').trim();
-    const fullTitle = `${cleanTitle} @ ${price} | vyapai.in Lucknow`;
-    const fullDesc = seoDescription || `${cleanTitle} service by vyapai.in (Sudarshan AI Labs Lucknow). Premium digital marketing & technology solutions for Indian MSMEs starting at ${price}.`;
-    const fullKeywords = seoKeywords || `${cleanTitle}, vyapai.in, Sudarshan AI Labs, digital marketing Lucknow, MSME growth, website setup, WhatsApp bot, local SEO`;
-    const pageUrl = `https://vyapai.in${window.location.pathname}`;
-
-    document.title = fullTitle;
-
-    // Canonical Link
-    let canonicalTag = document.querySelector('link[rel="canonical"]');
-    if (!canonicalTag) {
-      canonicalTag = document.createElement('link');
-      canonicalTag.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalTag);
-    }
-    canonicalTag.setAttribute('href', pageUrl);
-
-    // Helper to set or create meta tag
-    const setMetaTag = (selector, nameAttr, attrValue, content) => {
+    const pageUrl = `https://vyapai.in${pagePath}`;
+    const fullTitle = `${cleanTitle} from ${price} | Sudarshan AI Labs Lucknow`;
+    const fullDesc = seoDescription || `${cleanTitle} by Sudarshan AI Labs in Lucknow. ${description}`.slice(0, 300);
+    const setMeta = (selector, attributes, content) => {
       let tag = document.querySelector(selector);
       if (!tag) {
         tag = document.createElement('meta');
-        tag.setAttribute(nameAttr, attrValue);
+        Object.entries(attributes).forEach(([key, value]) => tag.setAttribute(key, value));
         document.head.appendChild(tag);
       }
       tag.setAttribute('content', content);
     };
+    document.title = fullTitle;
+    let canonicalTag = document.querySelector('link[rel="canonical"]');
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link');
+      canonicalTag.rel = 'canonical';
+      document.head.appendChild(canonicalTag);
+    }
+    canonicalTag.href = pageUrl;
+    setMeta('meta[name="description"]', { name: 'description' }, fullDesc);
+    setMeta('meta[property="og:title"]', { property: 'og:title' }, fullTitle);
+    setMeta('meta[property="og:description"]', { property: 'og:description' }, fullDesc);
+    setMeta('meta[property="og:url"]', { property: 'og:url' }, pageUrl);
+    setMeta('meta[name="twitter:card"]', { name: 'twitter:card' }, 'summary_large_image');
+    setMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, fullTitle);
+    setMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, fullDesc);
 
-    // Meta Description & Keywords
-    setMetaTag('meta[name="description"]', 'name', 'description', fullDesc);
-    setMetaTag('meta[name="keywords"]', 'name', 'keywords', fullKeywords);
-
-    // Open Graph Tags
-    setMetaTag('meta[property="og:title"]', 'property', 'og:title', fullTitle);
-    setMetaTag('meta[property="og:description"]', 'property', 'og:description', fullDesc);
-    setMetaTag('meta[property="og:url"]', 'property', 'og:url', pageUrl);
-
-    // Twitter Card Tags
-    setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', fullTitle);
-    setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', fullDesc);
-
-    // Inject Service & Breadcrumb JSON-LD Schemas
-    const numPrice = parseInt(price.replace(/[^0-9]/g, ''), 10) || 0;
-    
+    const numPrice = Number(String(price).replace(/[^0-9.]/g, '')) || 0;
     const schemaData = {
-      "@context": "https://schema.org",
-      "@graph": [
+      '@context': 'https://schema.org',
+      '@graph': [
         {
-          "@type": "Service",
-          "@id": `https://vyapai.in${pagePath}#service`,
-          "name": cleanTitle,
-          "description": seoDescription || description,
-          "category": category,
-          "provider": {
-            "@type": "LocalBusiness",
-            "name": "vyapai.in - Sudarshan AI Labs Pvt. Ltd.",
-            "url": "https://vyapai.in",
-            "telephone": "+91-7388833006",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Lucknow",
-              "addressRegion": "Uttar Pradesh",
-              "addressCountry": "IN"
-            }
-          },
-          "areaServed": {
-            "@type": "AdministrativeArea",
-            "name": "Lucknow, Uttar Pradesh, India"
-          },
-          "offers": {
-            "@type": "Offer",
-            "price": numPrice,
-            "priceCurrency": "INR",
-            "url": `https://vyapai.in${pagePath}`,
-            "availability": "https://schema.org/InStock"
+          '@type': 'WebPage',
+          '@id': `${pageUrl}#webpage`,
+          url: pageUrl,
+          name: fullTitle,
+          description: fullDesc,
+          inLanguage: 'en-IN',
+          isPartOf: { '@id': 'https://vyapai.in/#website' },
+          about: { '@id': 'https://vyapai.in/#organization' },
+          mainEntity: { '@id': `${pageUrl}#service` },
+          breadcrumb: { '@id': `${pageUrl}#breadcrumb` }
+        },
+        {
+          '@type': 'Service',
+          '@id': `${pageUrl}#service`,
+          name: cleanTitle,
+          description: seoDescription || description,
+          serviceType: category,
+          provider: { '@id': 'https://vyapai.in/#organization' },
+          areaServed: { '@type': 'City', name: 'Lucknow', containedInPlace: { '@type': 'AdministrativeArea', name: 'Uttar Pradesh, India' } },
+          offers: {
+            '@type': 'Offer',
+            url: pageUrl,
+            price: numPrice,
+            priceCurrency: 'INR',
+            availability: 'https://schema.org/InStock'
           }
         },
         {
-          "@type": "BreadcrumbList",
-          "@id": `https://vyapai.in${pagePath}#breadcrumb`,
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://vyapai.in/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": category || "Services",
-              "item": "https://vyapai.in/#plans"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": cleanTitle,
-              "item": `https://vyapai.in${pagePath}`
-            }
+          '@type': 'BreadcrumbList',
+          '@id': `${pageUrl}#breadcrumb`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vyapai.in/' },
+            { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://vyapai.in/services' },
+            { '@type': 'ListItem', position: 3, name: cleanTitle, item: pageUrl }
           ]
         }
       ]
     };
-
     let scriptTag = document.getElementById('service-jsonld');
     if (!scriptTag) {
       scriptTag = document.createElement('script');
@@ -138,13 +105,8 @@ const ServiceLayout = ({
       document.head.appendChild(scriptTag);
     }
     scriptTag.textContent = JSON.stringify(schemaData);
-
-    // Scroll to top on page load
     window.scrollTo(0, 0);
-
-    return () => {
-      if (scriptTag) scriptTag.remove();
-    };
+    return () => scriptTag.remove();
   }, [title, price, seoDescription, seoKeywords, description, category, pagePath]);
 
   // Format WhatsApp message link

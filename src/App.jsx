@@ -5,7 +5,7 @@ import {
   Check, ArrowRight, Menu, XIcon,
   MessageCircle, Phone, ChevronDown, BarChart3
 } from "lucide-react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import AmbientBackground from './components/AmbientBackground.jsx';
 import KineticTitle from './components/KineticTitle.jsx';
 import MagnetButton from './components/MagnetButton.jsx';
@@ -38,6 +38,7 @@ const BusinessGrowthConsultation = React.lazy(() => import('./pages/services/Bus
 const ServicesPage = React.lazy(() => import('./pages/ServicesPage.jsx'));
 const FaqPage = React.lazy(() => import('./pages/FaqPage.jsx'));
 const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));
+const AboutPage = React.lazy(() => import('./pages/AboutPage.jsx'));
 
 const serviceComponents = {
   TechSwarajPack,
@@ -1007,11 +1008,11 @@ export default function App() {
           const ServiceComponent = serviceComponents[service.component];
           return [
             <Route key={service.slug} path={`/services/${service.slug}`} element={<ServiceComponent />} />,
-            <Route key={service.legacyPath} path={`/services/${service.legacyPath}`} element={<ServiceComponent />} />,
+            <Route key={service.legacyPath} path={`/services/${service.legacyPath}`} element={<Navigate replace to={`/services/${service.slug}`} />} />,
           ];
         })}
         <Route path="/faq" element={<FaqPage />} />
-        <Route path="/digital-marketing-lucknow-faq" element={<FaqPage />} />
+        <Route path="/about-sudarshan-ai-labs" element={<AboutPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
