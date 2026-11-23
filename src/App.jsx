@@ -5,13 +5,14 @@ import {
   Check, ArrowRight, Menu, XIcon,
   MessageCircle, Phone, ChevronDown, BarChart3
 } from "lucide-react";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import AmbientBackground from './components/AmbientBackground.jsx';
 import KineticTitle from './components/KineticTitle.jsx';
 import MagnetButton from './components/MagnetButton.jsx';
 import FigmaCanvas from './components/FigmaCanvas.jsx';
 import ScrollTransitions from './components/ScrollTransitions.jsx';
 import { serviceCatalog } from './data/serviceCatalog.js';
+import siteSchema from './data/siteSchema.js';
 
 const OnlinePresenceAnalyzer = React.lazy(() => import('./components/OnlinePresenceAnalyzer.jsx'));
 
@@ -769,6 +770,26 @@ const detailPages = [
 // --- Main App Component ---
 
 export default function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const globalTypes = new Set(['Organization', 'LocalBusiness', 'WebSite']);
+    const homeTypes = new Set(['WebPage', 'OfferCatalog', 'FAQPage']);
+    const graph = siteSchema['@graph'] || [];
+    const pageGraph = location.pathname === '/'
+      ? graph.filter((node) => globalTypes.has(node['@type']) || homeTypes.has(node['@type']))
+      : graph.filter((node) => globalTypes.has(node['@type']));
+    let script = document.getElementById('route-jsonld');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'route-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify({ '@context': siteSchema['@context'], '@graph': pageGraph });
+    return () => script.remove();
+  }, [location.pathname]);
+
   // --- Firebase State ---
   const [auth, setAuth] = useState(null);
   const [db, setDb] = useState(null);
