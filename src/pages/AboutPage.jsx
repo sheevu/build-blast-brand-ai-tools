@@ -59,7 +59,7 @@ export default function AboutPage() {
           <p style={{ color: '#94a3b8', lineHeight: 2 }}>
             📍 Indira Nagar, Lucknow, Uttar Pradesh — 226016<br />
             📞 +91-7388833006<br />
-            ✉️ hello@sudarshan.ai<br />
+            ✉️ Sudarshanailabs@gmail.com<br />
             🌐 <a href="https://vyapai.in" style={{ color: '#6366f1' }}>vyapai.in</a>
           </p>
         </div>
